@@ -44,8 +44,8 @@ class Battlesnake(object):
         # Choose a random direction to move in
         possible_moves = ["up", "down", "left", "right"]
         # move = random.choice(possible_moves)
-        move = "left"
-        if data["you"]["body"]["x"] == 0:
+        move = "down"
+        if data["you"]["body"][0]["x"] == 0:
             move = "right"
         
             
