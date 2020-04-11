@@ -30,7 +30,7 @@ class Battlesnake(object):
         # TODO: Use this function to decide how your snake is going to look on the board.
         data = cherrypy.request.json
         print("START")
-        return {"color": "#C06C84", "headType": "bendr", "tailType": "freckled"}
+        return {"color": "#C06C84", "headType": "bendr", "tailType": "small-rattle"}
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
