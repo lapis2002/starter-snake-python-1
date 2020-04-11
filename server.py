@@ -46,6 +46,7 @@ class Battlesnake(object):
         move = random.choice(possible_moves)
 
         print(f"MOVE: {move}")
+        print(data["you"])
         return {"move": move}
 
     @cherrypy.expose
