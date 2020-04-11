@@ -102,6 +102,34 @@ class Battlesnake(object):
         print("END")
         return "ok"
 
+class GameBoard (object):
+    def __init__(self, height, weight):
+        self.height = height
+        self.width = width
+        self.grid = [[0 for col in range(width)]
+            for row in range(height)]
+
+    def set_cell(self, coord, value):
+        self.grid[coord[0]][coord[1]] = value
+
+    def get_cell (self, coord):
+        return self.grid[coord[0]][coord[1]]
+
+class Snake(object):
+    def __init__(self, snake):
+        self.id = snake["id"]
+        self.health = snake["health"]
+        self.body, self.len = self.get_body(snake)
+
+    def get_body(self, snake):
+        body = []
+        for coord in snake["body"]:
+            body.append([coord["x"], coord["y"]])
+
+        return body, len(body)
+
+
+        
 
 if __name__ == "__main__":
     server = Battlesnake()
