@@ -49,7 +49,7 @@ class Battlesnake(object):
             move = "down"
         elif data["you"]["body"][0]["x"] == 0 and data["you"]["body"][0]["y"] == data["game"]["board"]["height"]:
             move = "up"
-            
+        print(data["you"]["body"][0])
         
 
 
