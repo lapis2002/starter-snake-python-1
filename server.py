@@ -13,6 +13,7 @@ class Battlesnake(object):
     @cherrypy.expose
     def index(self):
         # If you open your snake URL in a browser you should see this message.
+        #test
         return "Your Battlesnake is alive!"
 
     @cherrypy.expose
