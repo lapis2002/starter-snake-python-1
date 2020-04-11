@@ -69,13 +69,13 @@ class Battlesnake(object):
 
         else:
             if data["you"]["body"][0]["y"] > data["you"]["body"][1]["y"]:
-                possible_moves = ["down", "left", "right"]
+                possible_moves = ["down", "down", "left", "right"]
             elif data["you"]["body"][0]["y"] < data["you"]["body"][1]["y"]:
-                possible_moves = ["up", "left", "right"]
+                possible_moves = ["up", "up", "left", "right"]
             elif data["you"]["body"][0]["x"] > data["you"]["body"][1]["x"]:
-                possible_moves = ["up", "down", "right"]
+                possible_moves = ["up", "down", "right", "right"]
             else:
-                possible_moves = ["up", "down", "left"]
+                possible_moves = ["up", "down", "left", "left"]
 
             move = random.choice(possible_moves)
 
