@@ -67,6 +67,21 @@ class Battlesnake(object):
             else:
                 move = "up"
 
+        else:
+            if data["you"]["body"][0]["y"] > data["you"]["body"][1]["y"]:
+                possible_moves = ["down", "left", "right"]
+            elif data["you"]["body"][0]["y"] < data["you"]["body"][1]["y"]:
+                possible_moves = ["up", "left", "right"]
+            elif data["you"]["body"][0]["x"] > data["you"]["body"][1]["x"]:
+                possible_moves = ["up", "down", "right"]
+            else:
+                possible_moves = ["up", "down", "left"]
+
+            move = random.choice(possible_moves)
+
+
+
+
         print("snake:", data["you"]["body"])
         print("game:", data["board"])
         
