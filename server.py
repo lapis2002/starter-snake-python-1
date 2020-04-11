@@ -45,14 +45,9 @@ class Battlesnake(object):
         possible_moves = ["up", "down", "left", "right"]
         # move = random.choice(possible_moves)
         move = "left"
-        if data["you"]["body"]["x"] == data["game"]["board"]["width"]-1:
-            if data["you"]["body"]["y"] == data["game"]["board"]["height"]-1:
-                move = "up"
-            else:
-                move = "down"
-        elif data["you"]["body"]["x"] == 0:
+        if data["you"]["body"]["x"] == 0:
             move = "right"
-
+        
             
 
         print(f"MOVE: {move}")
