@@ -93,7 +93,7 @@ class Battlesnake(object):
         return {"move": move}
 
     def init(data):
-        grid = 
+        grid = []
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
