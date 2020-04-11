@@ -45,10 +45,28 @@ class Battlesnake(object):
         possible_moves = ["up", "down", "left", "right"]
         move = random.choice(possible_moves)
         # move = "left"
-        if data["you"]["body"][0]["x"] == 0 and data["you"]["body"][0]["y"] == 0:
-            move = "down"
-        elif data["you"]["body"][0]["x"] == 0 and data["you"]["body"][0]["y"] == data["board"]["height"]:
-            move = "up"
+        if data["you"]["body"][0]["x"] == 0 or data["you"]["body"][0]["x"] == data["board"]["width"]-1:
+            if data["you"]["body"][0]["x"] != data["you"]["body"][1]["x"]:
+                if data["you"]["body"][0]["y"] == 0:
+                    move = "down"
+                else:
+                    move = "up"
+            elif data["you"]["body"][1]["x"] == 0:
+                move = "right"
+            else:
+                move = "left"
+
+        elif data["you"]["body"][0]["y"] == 0 or data["you"]["body"][0]["y"] == data["board"]["height"]-1:
+            if data["you"]["body"][0]["y"] != data["you"]["body"][1]["y"]:
+                if data["you"]["body"][0]["x"] == 0:
+                    move = "right"
+                else:
+                    move = "left"
+            elif data["you"]["body"][1]["y"] == 0:
+                move = "down"
+            else:
+                move = "up"
+
         print("snake:", data["you"]["body"])
         print("game:", data["board"])
         
