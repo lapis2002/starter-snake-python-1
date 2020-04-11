@@ -69,17 +69,17 @@ class Battlesnake(object):
 
         else:
             if data["you"]["body"][0]["y"] > data["you"]["body"][1]["y"]:
-                move = "down"
-                # possible_moves = ["down", "down", "left", "right"]
+                # move = "down"
+                possible_moves = ["down", "down", "left", "right"]
             elif data["you"]["body"][0]["y"] < data["you"]["body"][1]["y"]:
-                move = "up"
-                # possible_moves = ["up", "up", "left", "right"]
+                # move = "up"
+                possible_moves = ["up", "up", "left", "right"]
             elif data["you"]["body"][0]["x"] > data["you"]["body"][1]["x"]:
-                move = "right"
-                # possible_moves = ["up", "down", "right", "right"]
+                # move = "right"
+                possible_moves = ["up", "down", "right", "right"]
             else:
-                move = "left"
-                # possible_moves = ["up", "down", "left", "left"]
+                # move = "left"
+                possible_moves = ["up", "down", "left", "left"]
 
             # move = random.choice(possible_moves)
 
@@ -88,14 +88,12 @@ class Battlesnake(object):
 
         print("snake:", data["you"]["body"])
         print("game:", data["board"])
-        
-
-
-            
-
         print(f"MOVE: {move}")
         # print(data["you"])
         return {"move": move}
+
+    def init(data):
+        grid = 
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
