@@ -1,12 +1,17 @@
 import os
 import random
-
+from snake import Snake
+from gameboard import GameBoard
 import cherrypy
 
 """
 This is a simple Battlesnake server written in Python.
 For instructions see https://github.com/BattlesnakeOfficial/starter-snake-python/README.md
 """
+
+SNAKE = 1
+FOOD = 3
+ENEMIES = 5
 
 
 class Battlesnake(object):
@@ -92,8 +97,26 @@ class Battlesnake(object):
         # print(data["you"])
         return {"move": move}
 
-    def init(data):
-        grid = []
+    def init(self):
+        food = []
+        opponents = []
+        data = cherrypy.request.json
+        grid = GameBoard(data["board"]["height"], data["board"]["width"])
+        my_snake = Snake(data["you"])
+
+        for food in data["board"]["food"]:
+            food.append([food["x"], food["y"]])
+            grid.set_cell([food["x"], food["y"]], FOOD)
+
+        for snake in data["snakes"]:
+            snake = Snake(snake)
+            opponents.append(snake)
+            for coord in snake.get_body:
+                grid.set_cell([coord["x"], coord["y"]], ENEMIES)
+
+
+        
+
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
@@ -103,32 +126,6 @@ class Battlesnake(object):
         data = cherrypy.request.json
         print("END")
         return "ok"
-
-class GameBoard (object):
-    def __init__(self, height, weight):
-        self.height = height
-        self.width = width
-        self.grid = [[0 for col in range(width)]
-            for row in range(height)]
-
-    def set_cell(self, coord, value):
-        self.grid[coord[0]][coord[1]] = value
-
-    def get_cell (self, coord):
-        return self.grid[coord[0]][coord[1]]
-
-class Snake(object):
-    def __init__(self, snake):
-        self.id = snake["id"]
-        self.health = snake["health"]
-        self.body, self.len = self.get_body(snake)
-
-    def get_body(self, snake):
-        body = []
-        for coord in snake["body"]:
-            body.append([coord["x"], coord["y"]])
-
-        return body, len(body)
 
 
         
