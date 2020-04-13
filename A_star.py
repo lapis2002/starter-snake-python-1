@@ -32,7 +32,7 @@ class Grid ():
     def __init__(self, height, width):
         self.opened = []
         self.closed = set()
-        self.points = []
+        self.cells = []
         self.height = height
         self.width = width
         self.grid = [[(False, 1) for col in range(width)]
@@ -59,7 +59,7 @@ class Grid ():
     #     return dx + dy
 
     def get_cell(self, coord):
-        return self.points[coord[0]*self.height + coord[1]]
+        return self.cells[coord[0]*self.height + coord[1]]
 
 
     def get_path(self, start, end):
