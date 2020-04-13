@@ -64,6 +64,24 @@ class Grid ():
 
         return self.cells[coord[0]*self.height + coord[1]]
 
+    ###
+    def init_grid(self):
+        walls = ((0, 5), (1, 0), (1, 1), (1, 5), (2, 3),
+                 (3, 1), (3, 2), (3, 5), (4, 1), (4, 4), (5, 1))
+
+        start = (0,0)
+        end = (5,5)
+        for x in range(self.width):
+            for y in range(self.height):
+                if (x, y) in walls:
+                    reachable = False
+                    value = 7
+                else:
+                    reachable = True
+                    value = 1
+                self.cells.append(Point([x, y], reachable, value))
+        self.start = self.get_cell(start)
+        self.end = self.get_cell(end)
 
     def get_path(self, start, end):
         path = []
@@ -73,6 +91,8 @@ class Grid ():
             point = point.parent
 
         path.append(point.get_direction())
+        print(path)
+        return path
 
 
     def get_neighbor(self, point):
