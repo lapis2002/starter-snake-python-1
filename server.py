@@ -54,7 +54,7 @@ def init(data):
 
     for snake in data["board"]["snakes"]:
         snake = Snake(snake, DANGER)
-        if snake.id() != my_snake.id():
+        if snake.id != my_snake.id:
             opponents.append(snake)
             for coord in snake.body:
                 grid.set_cell(coord)
