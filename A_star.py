@@ -44,10 +44,10 @@ class Grid ():
         self.grid[point.x][point.y] = (reachable, value)
 
     def set_grid(self):
-        walls = ((0, 5), (1, 0), (1, 1), (1, 5), (2, 3),
-                 (3, 1), (3, 2), (3, 5), (4, 1), (4, 4), (5, 1))
-        for x in range(self.grid_width):
-            for y in range(self.grid_height):
+        # walls = ((0, 5), (1, 0), (1, 1), (1, 5), (2, 3),
+        #          (3, 1), (3, 2), (3, 5), (4, 1), (4, 4), (5, 1))
+        for x in range(self.width):
+            for y in range(self.height):
                 reachable, value = self.grid[x][y]
                 self.cells.append(Point(x, y, reachable, value))
 
