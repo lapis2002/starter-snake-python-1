@@ -1,7 +1,7 @@
 import os
 import random
 from snake import Snake
-from gameboard import GameBoard
+# from gameboard import GameBoard
 from A_star import *
 import cherrypy
 
@@ -36,7 +36,30 @@ def follow_tail(gameboard, snake):
     end = gameboard.get_cell([snake.tail.x, snake.tail.y])
     snake.next_move = gameboard.process(start, end)[0]
 
-    
+
+def init(data):
+    foods = []
+    opponents = []
+    # data = cherrypy.request.json
+    grid = Grid(data["board"]["height"], data["board"]["width"])
+    my_snake = Snake(data["you"])
+
+    for coord in my_snake.body[1:]:
+        grid.set_cell([coord["x"], coord["y"]], False, DANGER)
+
+    for food in data["board"]["food"]:
+        foods.append(Point([food["x"], food["y"]], True, FOOD))
+        grid.set_cell([food["x"], food["y"]], True, FOOD)
+
+    for snake in data["snakes"]:
+        snake = Snake(snake)
+        if snake.id() != my_snake.id():
+            opponents.append(snake)
+            for coord in snake.body:
+                grid.set_cell([coord["x"], coord["y"]], False, DANGER)
+
+    return my_snake, grid, foods, opponents
+
 
 class Battlesnake(object):
     @cherrypy.expose
@@ -128,29 +151,7 @@ class Battlesnake(object):
         # print(data["you"])
         return {"move": move}
 
-    def init(self, data):
-        foods = []
-        opponents = []
-        # data = cherrypy.request.json
-        grid = Grid(data["board"]["height"], data["board"]["width"])
-        my_snake = Snake(data["you"])
-
-        for coord in my_snake.body[1:]:
-            grid.set_cell([coord["x"], coord["y"]], False, DANGER)
-
-        for food in data["board"]["food"]:
-            foods.append(Point([food["x"], food["y"]], True, FOOD))
-            grid.set_cell([food["x"], food["y"]], True, FOOD)
-
-        for snake in data["snakes"]:
-            snake = Snake(snake)
-            if snake.id() != my_snake.id():
-                opponents.append(snake)
-                for coord in snake.body:
-                    grid.set_cell([coord["x"], coord["y"]], False, DANGER)
-
-        return my_snake, grid, foods, opponents
-
+    
 
         
 
