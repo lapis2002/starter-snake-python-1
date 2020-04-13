@@ -51,7 +51,6 @@ class Grid ():
                 reachable, value = self.grid[x][y]
                 self.cells.append(Point(x, y, reachable, value))
 
-        print(len(self.cells))
         # self.start = self.get_cell(0, 0)
         # self.end = self.get_cell(5, 5)
 
@@ -61,6 +60,8 @@ class Grid ():
     #     return dx + dy
 
     def get_cell(self, coord):
+        print(len(self.cells))
+
         return self.cells[coord[0]*self.height + coord[1]]
 
 
