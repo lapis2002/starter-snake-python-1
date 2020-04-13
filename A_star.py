@@ -1,6 +1,7 @@
 # from gameboard import Point
 import heapq
 
+#TO DO: fix g
 class Point():
     def __init__(self, coord, reachable, value):
         self.reachable = reachable
@@ -39,7 +40,7 @@ class Grid ():
 
     def set_cell(self, point):
         reachable = point.reachable
-        value = point.value
+        value = point.g
         self.grid[point.x][point.y] = (reachable, value)
 
     def set_grid(self):
