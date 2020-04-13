@@ -59,6 +59,7 @@ def init(data):
             for coord in snake.body:
                 grid.set_cell(coord)
             
+    grid.set_grid()
 
     return my_snake, grid, foods, opponents
 
