@@ -52,7 +52,7 @@ def init(data):
         foods.append(food)
         grid.set_cell(food)
 
-    for snake in data["snakes"]:
+    for snake in data["board"]["snakes"]:
         snake = Snake(snake, DANGER)
         if snake.id() != my_snake.id():
             opponents.append(snake)
