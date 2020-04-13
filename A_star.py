@@ -49,7 +49,7 @@ class Grid ():
         for x in range(self.width):
             for y in range(self.height):
                 reachable, value = self.grid[x][y]
-                self.cells.append(Point(x, y, reachable, value))
+                self.cells.append(Point([x, y], reachable, value))
 
         # self.start = self.get_cell(0, 0)
         # self.end = self.get_cell(5, 5)
