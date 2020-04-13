@@ -2,6 +2,7 @@ import os
 import random
 from snake import Snake
 from gameboard import GameBoard
+from A_star import *
 import cherrypy
 
 """
@@ -11,8 +12,31 @@ For instructions see https://github.com/BattlesnakeOfficial/starter-snake-python
 
 SNAKE = 1
 FOOD = 3
-ENEMIES = 5
+E_HEAD = 5
+DANGER = 7
 
+
+def dist(p1, p2):
+    dx = abs(p1[0]-p2[0])
+    dy = abs(p1[1]-p2[1])
+    return dx + dy
+
+def find_food():
+    return None
+
+def get_food(foods, gameboard, snake):
+    start = gameboard.get_cell([snake.head.x, snake.head.y])
+    foods = sorted(foods, key=lambda x: start.distance(x))
+    end = gameboard.get_cell(foods[0][0])
+    snake.next_move = gameboard.process(start, end)[0]
+
+
+def follow_tail(gameboard, snake):
+    start = gameboard.get_cell([snake.head.x, snake.head.y])
+    end = gameboard.get_cell([snake.tail.x, snake.tail.y])
+    snake.next_move = gameboard.process(start, end)[0]
+
+    
 
 class Battlesnake(object):
     @cherrypy.expose
@@ -47,6 +71,7 @@ class Battlesnake(object):
         data = cherrypy.request.json
 
         # Choose a random direction to move in
+        '''
         possible_moves = ["up", "down", "left", "right"]
         move = random.choice(possible_moves)
         # move = "left"
@@ -89,33 +114,42 @@ class Battlesnake(object):
                 possible_moves = ["up", "down", "left", "left"]
 
             move = random.choice(possible_moves)
+        '''
 
 
+        my_snake, grid, foods, opponents = init(data)
+        if my_snake.health < 30:
+            move = get_food(foods, grid, my_snake)
+        else:
+            move = follow_tail(grid, my_snake)
 
-
-        print("snake:", data["you"]["body"])
-        print("game:", data["board"])
-        print("check case", check)
+        
         print(f"MOVE: {move}")
         # print(data["you"])
         return {"move": move}
 
-    def init(self):
-        food = []
+    def init(self, data):
+        foods = []
         opponents = []
-        data = cherrypy.request.json
-        grid = GameBoard(data["board"]["height"], data["board"]["width"])
+        # data = cherrypy.request.json
+        grid = Grid(data["board"]["height"], data["board"]["width"])
         my_snake = Snake(data["you"])
 
+        for coord in my_snake.body[1:]:
+            grid.set_cell([coord["x"], coord["y"]], False, DANGER)
+
         for food in data["board"]["food"]:
-            food.append([food["x"], food["y"]])
-            grid.set_cell([food["x"], food["y"]], FOOD)
+            foods.append(Point([food["x"], food["y"]], True, FOOD))
+            grid.set_cell([food["x"], food["y"]], True, FOOD)
 
         for snake in data["snakes"]:
             snake = Snake(snake)
-            opponents.append(snake)
-            for coord in snake.get_body:
-                grid.set_cell([coord["x"], coord["y"]], ENEMIES)
+            if snake.id() != my_snake.id():
+                opponents.append(snake)
+                for coord in snake.body:
+                    grid.set_cell([coord["x"], coord["y"]], False, DANGER)
+
+        return my_snake, grid, foods, opponents
 
 
         
