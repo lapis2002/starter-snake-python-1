@@ -37,8 +37,10 @@ class Grid ():
         self.grid = [[(False, 1) for col in range(width)]
                      for row in range(height)]
 
-    def set_cell(self, coord, reachable, value):
-        self.grid[coord[0]][coord[1]] = (reachable, value)
+    def set_cell(self, point):
+        reachable = point.reachable
+        value = point.value
+        self.grid[point.x][point.y] = (reachable, value)
 
     def set_grid(self):
         walls = ((0, 5), (1, 0), (1, 1), (1, 5), (2, 3),

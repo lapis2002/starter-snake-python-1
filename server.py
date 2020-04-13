@@ -45,18 +45,18 @@ def init(data):
     my_snake = Snake(data["you"], DANGER)
 
     for coord in my_snake.body:
-        grid.set_cell([coord["x"], coord["y"]], False, DANGER)
+        grid.set_cell(coord)
 
     for food in data["board"]["food"]:
         foods.append(Point([food["x"], food["y"]], True, FOOD))
-        grid.set_cell([food["x"], food["y"]], True, FOOD)
+        grid.set_cell(food)
 
     for snake in data["snakes"]:
         snake = Snake(snake, DANGER)
         if snake.id() != my_snake.id():
             opponents.append(snake)
             for coord in snake.body:
-                grid.set_cell([coord["x"], coord["y"]], False, DANGER)
+                grid.set_cell(coord)
             
 
     return my_snake, grid, foods, opponents
