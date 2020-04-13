@@ -13,7 +13,7 @@ For instructions see https://github.com/BattlesnakeOfficial/starter-snake-python
 SNAKE = 1
 FOOD = 3
 E_HEAD = 5
-DANGER = 7
+DANGER = 10
 
 
 def dist(p1, p2):
@@ -42,9 +42,9 @@ def init(data):
     opponents = []
     # data = cherrypy.request.json
     grid = Grid(data["board"]["height"], data["board"]["width"])
-    my_snake = Snake(data["you"])
+    my_snake = Snake(data["you"], DANGER)
 
-    for coord in my_snake.body[1:]:
+    for coord in my_snake.body:
         grid.set_cell([coord["x"], coord["y"]], False, DANGER)
 
     for food in data["board"]["food"]:
@@ -52,11 +52,12 @@ def init(data):
         grid.set_cell([food["x"], food["y"]], True, FOOD)
 
     for snake in data["snakes"]:
-        snake = Snake(snake)
+        snake = Snake(snake, DANGER)
         if snake.id() != my_snake.id():
             opponents.append(snake)
             for coord in snake.body:
                 grid.set_cell([coord["x"], coord["y"]], False, DANGER)
+            
 
     return my_snake, grid, foods, opponents
 
