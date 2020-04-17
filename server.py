@@ -48,7 +48,7 @@ def init(data):
         grid.set_cell(coord)
 
     for food in data["board"]["food"]:
-        food = Point([food["x"], food["y"]], True, FOOD)
+        food = Point([food["x"], food["y"]], FOOD)
         foods.append(food)
         grid.set_cell(food)
 
