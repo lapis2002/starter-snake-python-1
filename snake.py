@@ -12,7 +12,7 @@ class Snake(Point):
     def set_body(self, snake, value):
         body = []
         for coord in snake["body"]:
-            coord = Point([coord["x"], coord["y"]], False, value)
+            coord = Point([coord["x"], coord["y"]], value)
             body.append(coord)
 
         return body, len(body)
