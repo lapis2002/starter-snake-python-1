@@ -1,43 +1,62 @@
-from A_star import Point
-# class Point():
-#     def __init__(self, coord):
-#         self.x = coord[0]
-#         self.y = coord[1]
+class Point():
+    def __init__(self, coord, value):
+        # self.reachable = reachable
+        self.x = coord[0]
+        self.y = coord[1]
+        self.parent = None
+        self.v = value
+        self.g = 0
+        self.h = 0
+        self.f = 0
 
-#     def __eq__(self, other):
-#         return self.x == other.x and self.y and other.y
+    def get_direction(self):
+        if self.parent.x > self.x:
+            direction = "left"
+        elif self.parent.x < self.x:
+            direction = "right"
+        elif self.parent.y > self.y:
+            direction = "up"
+        elif self.parent.y < self.y:
+            direction = "down"
+        return direction
 
-#     def get_x(self):
-#         return self.x
+    def distance(self, other):
+        dx = abs(self.x-other.x)
+        dy = abs(self.y-other.y)
+        return dx + dy
 
-#     def get_y(self):
-#         return self.y
+    def __eq__(self, other):
+        return self.x == other.x and self.y and other.y
 
-#     def left(self):
-#         return Point([self.x-1, self.y])
-
-#     def right(self):
-#         return Point([self.x+1, self.y])
-
-#     def up(self):
-#         return Point([self.x, self.y-1])
-
-#     def down(self):
-#         return Point([self.x, self.y+1])
-        
-#     def neighbors(self):
-#         return [self.left(), self.up(), self.right(), self.down()]
 
 class GameBoard (Point):
-    def __init__(self, height, weight):
+    def __init__(self, height, weight, value=0):
         self.height = height
         self.width = width
-        self.grid = [[0 for col in range(width)]
+        self.grid = [[value for col in range(width)]
                      for row in range(height)]
 
     def set_cell(self, coord, value):
-        self.grid[coord[0]][coord[1]] = value
+        self.grid[coord[0]][coord[1]] = (value)
 
     def get_cell(self, coord):
         return self.grid[coord[0]][coord[1]]
+
+    def get_neighbors(self, point):
+        neighbors = []
+        if point.x > 0:
+            neighbors.append([point.x-1, point.y])
+        if point.y > 0:
+            neighbors.append([point.x, point.y-1])
+        if point.x < self.width-1:
+            neighbors.append([point.x+1, point.y])
+        if point.y < self.height-1:
+            neighbors.append([point.x, point.y+1])
+        return neighbors
+
+    def update_cell(self, child, parent, end):
+        child.g = parent.g + child.v
+        child.h = child.distance(end)
+        child.parent = parent
+        child.f = child.g + child.h
 

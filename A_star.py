@@ -1,14 +1,15 @@
 # from gameboard import Point
-import heapq
+from gameboard import *
 
 #TO DO: fix g
 class Point():
-    def __init__(self, coord, reachable, value):
-        self.reachable = reachable
+    def __init__(self, coord, value):
+        # self.reachable = reachable
         self.x = coord[0]
         self.y = coord[1]
         self.parent = None
-        self.g = value
+        self.v = value
+        self.g = 0
         self.h = 0
         self.f = 0
 
@@ -30,26 +31,24 @@ class Point():
 
 class Grid ():
     def __init__(self, height, width):
-        self.opened = []
-        self.closed = set()
         self.cells = []
         self.height = height
         self.width = width
-        self.grid = [[(False, 1) for col in range(width)]
+        self.grid = [[0 for col in range(width)]
                      for row in range(height)]
 
     def set_cell(self, point):
-        reachable = point.reachable
-        value = point.g
-        self.grid[point.x][point.y] = (reachable, value)
+        # reachable = point.reachable
+        value = point.v
+        self.grid[point.x][point.y] = (value)
 
     def set_grid(self):
         # walls = ((0, 5), (1, 0), (1, 1), (1, 5), (2, 3),
         #          (3, 1), (3, 2), (3, 5), (4, 1), (4, 4), (5, 1))
         for x in range(self.width):
             for y in range(self.height):
-                reachable, value = self.grid[x][y]
-                self.cells.append(Point([x, y], reachable, value))
+                value = self.grid[x][y]
+                self.cells.append(Point([x, y], value))
 
         # self.start = self.get_cell(0, 0)
         # self.end = self.get_cell(5, 5)
@@ -60,14 +59,12 @@ class Grid ():
     #     return dx + dy
 
     def get_cell(self, coord):
-        print(len(self.cells))
-
         return self.cells[coord[0]*self.height + coord[1]]
 
     ###
     def init_grid(self):
         walls = ((0, 5), (1, 0), (1, 1), (1, 5), (2, 3),
-                 (3, 1), (3, 2), (3, 5), (4, 1), (4, 4), (5, 1))
+                 (3, 1), (3, 2), (3, 5), (4, 4), (5, 1))
 
         start = (0,0)
         end = (5,5)
@@ -75,40 +72,59 @@ class Grid ():
             for y in range(self.height):
                 if (x, y) in walls:
                     reachable = False
-                    value = 7
+                    value = 10
                 else:
                     reachable = True
-                    value = 1
-                self.cells.append(Point([x, y], reachable, value))
+                    value = 0
+                if x==1 and y==4:
+                    value = 7
+                if x==4 and y==3:
+                    value = 7
+                self.set_cell(Point([x,y],value))
+                self.cells.append(Point([x, y], value))
         self.start = self.get_cell(start)
         self.end = self.get_cell(end)
 
+#correct
     def get_path(self, start, end):
         path = []
-        point = end
-        while point.parent is not start:
-            path.append(point.get_direction())
-            point = point.parent
+        dir = []
+        current = end
+        while current.parent is not start:
+            # print("go to", (current.x, current.y))
+            path.append(current.get_direction())
+            current = current.parent
+        # print("go to", (current.x, current.y))
 
-        path.append(point.get_direction())
-        print(path)
-        return path
+        path.append(current.get_direction())
+        print(path[::-1])
+        return path[::-1]
+    
+    # def get_path(self):
+    #     cell = self.end
+    #     path = [(cell.x, cell.y)]
+    #     while cell.parent is not self.start:
+    #         cell = cell.parent
+    #         path.append((cell.x, cell.y))
+    #     path.append((self.start.x, self.start.y))
+    #     path.reverse()
+    #     return path
 
 
-    def get_neighbor(self, point):
+    def get_neighbors(self, point):
         neighbors = []
-        if point.get_x() > 0:
+        if point.x > 0:
             neighbors.append(self.get_cell([point.x-1, point.y]))
-        if point.get_y() > 0:
+        if point.y > 0:
             neighbors.append(self.get_cell([point.x, point.y-1]))
-        if point.get_x() < self.width-1:
+        if point.x < self.width-1:
             neighbors.append(self.get_cell([point.x+1, point.y]))
-        if point.get_y() < self.height-1:
+        if point.y < self.height-1:
             neighbors.append(self.get_cell([point.x, point.y+1]))
         return neighbors
 
     def update_cell(self, adj, point, end):
-        adj.g += point.g
+        adj.g = point.g + adj.v
         # adj.h = self.get_heuistic(adj, end)
         adj.h = adj.distance(end)
         adj.parent = point
@@ -117,30 +133,209 @@ class Grid ():
     def process(self, start, end):
         # start: coord of start
         # end: coord of end
+        opened = []
+        closed = set()
         start = self.get_cell(start)
         end = self.get_cell(end)
-        heapq.heappush(self.opened, (start, start.f))
-        while len(self.opened):
-            point, f = heapq.heappop(self.opened)
-            self.closed.add(point)
-            if point is self.end:
+        opened.append((start, start.f))
+        while len(opened) > 0:
+            point, f = min(opened, key=lambda x: x[1])
+            opened.remove((point, f))
+            # if self.grid[point.x][point.y] != 0:
+            #     continue
+            
+            closed.add(point)
+
+            if point is end:
                 return self.get_path(start, end)
+
             neighbors = self.get_neighbors(point)
             for neighbor in neighbors:
-                if neighbor.reachable and neighbor not in self.closed:
-                    if (neighbor.f, neighbor) in self.opened:
-                        if neighbor.g > neighbor.g + point.g:
+                if neighbor not in closed:
+                    if (neighbor.f, neighbor) in opened:
+                        print("neighbor", neighbor.g)
+                        print("current", point.g + neighbor.v)
+                        if neighbor.g > 1 + point.g:
                             self.update_cell(neighbor, point, end)
                     else:
                         self.update_cell(neighbor, point, end)
-                        heapq.heappush(self.opened, (neighbor, neighbor.f))
+                        opened.append((neighbor, neighbor.f))
 
+    # def a_star (self, start, end):
+    #     self.opened = []
+    #     start = self.get_cell(start)
+    #     end = self.get_cell(end)
+    #     self.opend.append([start.x, start.y])
+    #     self.closed.add([start.x, start.y])
+    #     while len(self.opened) > 0:
+    #         current = self.opened[0]
+    #         print(current)
+
+    #         current = self.get_cell(current)
+    #         print(type(current))
+    #         if current is self.end:
+    #             return self.get_path(start, end)
+            
+    #         neighbors = self.get_neighbors(current)
+    #         for neighbor in neighbors:
+    #             if neighbor in self.closed:
+    #                 continue
+    #             if neighbor in self.opened:
+    #                 if neighbor.g > neighbor.v + current.g:
+    #                     self.update_cell(neighbor, current, end)
+    #             else:
+    #                 self.update_cell(neighbor, current, end)
+    #                 self.opened.append(neighbor)
+
+
+
+        '''
+            start_node = Node(None, start)
+    start_node.g = start_node.h = start_node.f = 0
+    end_node = Node(None, end)
+    end_node.g = end_node.h = end_node.f = 0
+
+    # Initialize both open and closed list
+    open_list = []
+    closed_list = []
+
+    # Add the start node
+    open_list.append(start_node)
+
+    # Loop until you find the end
+    while len(open_list) > 0:
+
+        # Get the current node
+        current_node = open_list[0]
+        current_index = 0
+        for index, item in enumerate(open_list):
+            if item.f < current_node.f:
+                current_node = item
+                current_index = index
+
+        # Pop current off open list, add to closed list
+        open_list.pop(current_index)
+        closed_list.append(current_node)
+
+        # Found the goal
+        if current_node == end_node:
+            path = []
+            current = current_node
+            while current is not None:
+                path.append(current.position)
+                current = current.parent
+            return path[::-1] # Return reversed path
+
+        # Generate children
+        children = []
+        for new_position in [(0, -1), (0, 1), (-1, 0), (1, 0), (-1, -1), (-1, 1), (1, -1), (1, 1)]: # Adjacent squares
+
+            # Get node position
+            node_position = (current_node.position[0] + new_position[0], current_node.position[1] + new_position[1])
+
+            # Make sure within range
+            if node_position[0] > (len(maze) - 1) or node_position[0] < 0 or node_position[1] > (len(maze[len(maze)-1]) -1) or node_position[1] < 0:
+                continue
+
+            # Make sure walkable terrain
+            if maze[node_position[0]][node_position[1]] != 0:
+                continue
+
+            # Create new node
+            new_node = Node(current_node, node_position)
+
+            # Append
+            children.append(new_node)
+
+        # Loop through children
+        for child in children:
+
+            # Child is on the closed list
+            for closed_child in closed_list:
+                if child == closed_child:
+                    continue
+
+            # Create the f, g, and h values
+            child.g = current_node.g + 1
+            child.h = ((child.position[0] - end_node.position[0]) ** 2) + ((child.position[1] - end_node.position[1]) ** 2)
+            child.f = child.g + child.h
+
+            # Child is already in the open list
+            for open_node in open_list:
+                if child == open_node and child.g > open_node.g:
+                    continue
+
+            # Add the child to the open list
+            open_list.append(child)
+            '''
 
 
 def dist(p1, p2):
-    dx = abs(p1.get_x()-p2.get_x())
-    dy = abs(p1.get_y()-p2.get_y())
+    dx = abs(p1[0]-p2[0])
+    dy = abs(p1[1]-p2[1])
     return dx + dy
 
-def valid_move(grid, moves):
-    return None
+def a_star (grid, start, end):
+    opened = [start]
+    closed = set()
+
+    g = GameBoard(grid.height, grid.weight, 1)
+    g.set_cell(Point(start,0))
+    f = GameBoard(grid.height, grid.weight)
+    f.set_cell(start, dist(start, end))
+
+    while len(opened) > 0:
+        current = min(opened, key=lambda x: f.get_cell(x))
+        opened.remove(current)
+
+        if current == end:
+            return grid.get_path(start, end)
+
+        closed.add(current)
+        neighbors = grid.get_neighbors(current)
+        for neighbor in neighbors:
+            if neighbor in closed:
+                continue
+            if neighbor in opened:
+                if g.get_cell(neighbor) > grid.get_cell(neighbor) + g.get_cell(current):
+                    g.set_cell(neighbor, grid.get_cell(neighbor) + g.get_cell(current))
+                    f.set_cell(neighbor, grid.get_cell(neighbor) + 
+                              g.get_cell(current) + dist(neighbor, end))
+            else:
+                g.set_cell(neighbor, grid.get_cell(neighbor) + g.get_cell(current))
+                opened.append(neighbor)
+                f.set_cell(neighbor, grid.get_cell(neighbor) +
+                           g.get_cell(current) + dist(neighbor, end))
+
+
+
+
+'''
+def process(self, start, end):
+        # start: coord of start
+        # end: coord of end
+        opened = []
+        closed = set()
+        start = self.get_cell(start)
+        end = self.get_cell(end)
+        opened.append((start, start.f))
+        while len(opened) > 0:
+            point, f = min(opened, key=lambda x: x[1])
+            opened.remove((point, f))
+            closed.add(point)
+            if point is end:
+                return self.get_path(start, end)
+            neighbors = self.get_neighbors(point)
+            for neighbor in neighbors:
+                if neighbor not in closed:
+                    if (neighbor.f, neighbor) in opened:
+                        print("neighbor", neighbor.g)
+                        print("current", point.g + neighbor.v)
+                        if neighbor.g > neighbor.v + point.g:
+                            self.update_cell(neighbor, point, end)
+                    else:
+                        self.update_cell(neighbor, point, end)
+                        opened.append((neighbor, neighbor.f))
+
+'''
+
