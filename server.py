@@ -30,6 +30,13 @@ def get_food(foods, gameboard, snake):
     end = gameboard.get_cell([foods[0].x, foods[0].y])
     snake.next_move = gameboard.process(start, end)[0]
 
+def next_move (foods, gameboard, opponents, snake):
+    for enemy in opponents:
+        get_food(foods, gameboard, enemy)
+        coord = enemy.head.get_cell_from_direction(enemy.next_move)
+        gameboard.set_cell(Point(coord), DANGER)
+
+    get_food(foods, gameboard, snake)
 
 def follow_tail(gameboard, snake):
     start = gameboard.get_cell([snake.head.x, snake.head.y])
@@ -157,7 +164,7 @@ class Battlesnake(object):
         #     get_food(foods, grid, my_snake)
         # else:
         #     follow_tail(grid, my_snake)
-        get_food(foods, grid, my_snake)
+        next_move(foods, grid, opponents, my_snake)
 
         move = my_snake.next_move
         
