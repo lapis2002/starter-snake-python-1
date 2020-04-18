@@ -78,7 +78,9 @@ def init(data):
             
     for y in range(len(grid.grid)):
         for x in range(len(grid.grid[0])):
-            if grid.grid[x][y] == 10:
+            if x == my_snake.head.x and y == my_snake.head.y:
+                print("@ ", end ="")
+            elif grid.grid[x][y] == 10:
                 print("* ", end="")
             elif grid.grid[x][y] == 7:
                 print("o ", end="")
