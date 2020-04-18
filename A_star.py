@@ -56,6 +56,8 @@ class Grid ():
         # reachable = point.reachable
         # value = point.v
         self.grid[coord[0]][coord[1]] = (value)
+        self.cells[coord[0]*self.height + coord[1]] = Point([coord[0], coord[1]], value)
+        
 
     def set_grid(self):
         # walls = ((0, 5), (1, 0), (1, 1), (1, 5), (2, 3),
