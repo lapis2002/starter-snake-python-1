@@ -10,7 +10,7 @@ This is a simple Battlesnake server written in Python.
 For instructions see https://github.com/BattlesnakeOfficial/starter-snake-python/README.md
 """
 
-SNAKE = 1
+SAFE = 1
 FOOD = 7
 E_HEAD = 5
 DANGER = 10
@@ -31,12 +31,18 @@ def get_food(foods, gameboard, snake):
     snake.next_move = gameboard.process(start, end)[0]
 
 def next_move (foods, gameboard, opponents, snake):
-    if len(opponents):
-        for enemy in opponents:
-            get_food(foods, gameboard, enemy)
-            coord = enemy.head.get_cell_from_direction(enemy.next_move)
-            gameboard.set_cell(coord, DANGER)
+    for enemy in opponents:
+        get_food(foods, gameboard, enemy)
+        coord = enemy.head.get_cell_from_direction(enemy.next_move)
+        gameboard.set_cell(coord, DANGER)
+    if snake.health < 30:
+        find_food(foods, gameboard, snake)
+    else:
+        get_food(foods, gameboard, snake)
 
+def find_food(foods, gameboard, snake):
+    for food in foods:
+        gameboard.set_cell([food[0], food[1]], SAFE)
     get_food(foods, gameboard, snake)
 
 def follow_tail(gameboard, snake):
