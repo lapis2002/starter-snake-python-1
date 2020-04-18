@@ -64,8 +64,8 @@ class Grid ():
         #          (3, 1), (3, 2), (3, 5), (4, 1), (4, 4), (5, 1))
         for x in range(self.width):
             for y in range(self.height):
-                value = self.grid[x][y]
-                self.cells.append(Point([x, y], value))
+                # value = self.grid[x][y]
+                self.cells.append(Point([x, y], 0))
 
         # self.start = self.get_cell(0, 0)
         # self.end = self.get_cell(5, 5)
