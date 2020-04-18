@@ -31,10 +31,11 @@ def get_food(foods, gameboard, snake):
     snake.next_move = gameboard.process(start, end)[0]
 
 def next_move (foods, gameboard, opponents, snake):
-    for enemy in opponents:
-        get_food(foods, gameboard, enemy)
-        coord = enemy.head.get_cell_from_direction(enemy.next_move)
-        gameboard.set_cell(coord, DANGER)
+    if len(opponents):
+        for enemy in opponents:
+            get_food(foods, gameboard, enemy)
+            coord = enemy.head.get_cell_from_direction(enemy.next_move)
+            gameboard.set_cell(coord, DANGER)
 
     get_food(foods, gameboard, snake)
 
