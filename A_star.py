@@ -24,6 +24,21 @@ class Point():
             direction = "down"
         return direction
 
+    def get_cell_from_direction(self, direction):
+        if direction == "up":
+            x = self.x
+            y = self.y - 1
+        elif direction == "right":
+            x = self.x + 1
+            y = self.y
+        elif direction == "down":
+            x = self.x
+            y = self.y + 1
+        else:
+            x = self.x - 1
+            y = self.y
+        return [x, y]
+
     def distance (self, other):
         dx = abs(self.x-other.x)
         dy = abs(self.y-other.y)
