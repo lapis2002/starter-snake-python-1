@@ -78,20 +78,23 @@ class Grid ():
                     value = 0
                 if x==1 and y==4:
                     value = 7
-                if x==4 and y==3:
+                if x==5 and y==2:
+                    value = 7
+                if x == 4 and y == 2:
+                    value = 7
+                if x == 4 and y == 1:
                     value = 7
                 self.set_cell(Point([x,y],value))
                 self.cells.append(Point([x, y], value))
         self.start = self.get_cell(start)
         self.end = self.get_cell(end)
 
-#correct
+
     def get_path(self, start, end):
         path = []
         dir = []
         current = end
         while current.parent is not start:
-            # print("go to", (current.x, current.y))
             path.append(current.get_direction())
             current = current.parent
         # print("go to", (current.x, current.y))
@@ -141,9 +144,7 @@ class Grid ():
         while len(opened) > 0:
             point, f = min(opened, key=lambda x: x[1])
             opened.remove((point, f))
-            # if self.grid[point.x][point.y] != 0:
-            #     continue
-            
+
             closed.add(point)
 
             if point is end:
@@ -155,7 +156,7 @@ class Grid ():
                     if (neighbor.f, neighbor) in opened:
                         print("neighbor", neighbor.g)
                         print("current", point.g + neighbor.v)
-                        if neighbor.g > 1 + point.g:
+                        if neighbor.g > neighbor.v + point.g:
                             self.update_cell(neighbor, point, end)
                     else:
                         self.update_cell(neighbor, point, end)
