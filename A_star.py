@@ -155,16 +155,14 @@ class Grid ():
         # print()
 
     def process(self, start, end):
-        # start: coord of start
-        # end: coord of end
         opened = []
         closed = set()
         # start = self.get_cell(start)
         # end = self.get_cell(end)
-        opened.append((start, start.f))
+        opened.append(start)
         while len(opened) > 0:
-            point, f = min(opened, key=lambda x: x[1])
-            opened.remove((point, f))
+            point = min(opened, key=lambda x: x.f)
+            opened.remove(point)
 
             closed.add(point)
 
@@ -174,14 +172,14 @@ class Grid ():
             neighbors = self.get_neighbors(point)
             for neighbor in neighbors:
                 if neighbor not in closed:
-                    if (neighbor.f, neighbor) in opened:
+                    if neighbor in opened:
                         print("neighbor", neighbor.g)
                         print("current", point.g + neighbor.v)
                         if neighbor.g > neighbor.v + point.g:
                             self.update_cell(neighbor, point, end)
                     else:
                         self.update_cell(neighbor, point, end)
-                        opened.append((neighbor, neighbor.f))
+                        opened.append(neighbor)
 
     # def a_star (self, start, end):
     #     self.opened = []
