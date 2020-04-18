@@ -34,7 +34,7 @@ def next_move (foods, gameboard, opponents, snake):
     for enemy in opponents:
         get_food(foods, gameboard, enemy)
         coord = enemy.head.get_cell_from_direction(enemy.next_move)
-        gameboard.set_cell(Point(coord), DANGER)
+        gameboard.set_cell(Point(coord, DANGER))
 
     get_food(foods, gameboard, snake)
 
