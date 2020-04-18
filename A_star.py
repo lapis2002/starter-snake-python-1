@@ -50,7 +50,7 @@ class Grid ():
         self.width = width
         self.grid = [[0 for col in range(width)]
                      for row in range(height)]
-        self.cells = set_grid()
+        self.cells = self.set_grid()
 
     def set_cell(self, coord, value):
         # reachable = point.reachable
