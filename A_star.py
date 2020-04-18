@@ -138,8 +138,8 @@ class Grid ():
         # end: coord of end
         opened = []
         closed = set()
-        start = self.get_cell(start)
-        end = self.get_cell(end)
+        # start = self.get_cell(start)
+        # end = self.get_cell(end)
         opened.append((start, start.f))
         while len(opened) > 0:
             point, f = min(opened, key=lambda x: x[1])
