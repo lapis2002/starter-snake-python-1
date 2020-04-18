@@ -100,7 +100,7 @@ class Grid ():
         # print("go to", (current.x, current.y))
 
         path.append(current.get_direction())
-        print(path[::-1])
+        print("path return", path[::-1])
         return path[::-1]
     
     # def get_path(self):
