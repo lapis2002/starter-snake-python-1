@@ -153,7 +153,7 @@ class Battlesnake(object):
 
 
         my_snake, grid, foods, opponents = init(data)
-        if my_snake.health < 30:
+        if my_snake.len < 3 or my_snake.health < 30:
             move = get_food(foods, grid, my_snake)
         else:
             move = follow_tail(grid, my_snake)
