@@ -46,11 +46,11 @@ class Point():
 
 class Grid ():
     def __init__(self, height, width):
-        self.cells = []
         self.height = height
         self.width = width
         self.grid = [[0 for col in range(width)]
                      for row in range(height)]
+        self.cells = set_grid()
 
     def set_cell(self, coord, value):
         # reachable = point.reachable
