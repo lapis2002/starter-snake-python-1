@@ -60,6 +60,7 @@ def init(data):
     grid = Grid(data["board"]["height"], data["board"]["width"])
     my_snake = Snake(data["you"], DANGER)
 
+    grid.set_grid()
     for coord in my_snake.body:
         grid.set_cell([coord.x, coord.y], DANGER)
 
@@ -75,7 +76,6 @@ def init(data):
             for coord in snake.body:
                 grid.set_cell([coord.x, coord.y], coord.v)
             
-    # grid.set_grid()
     for y in range(len(grid.grid)):
         for x in range(len(grid.grid[0])):
             if grid.grid[x][y] == 10:
