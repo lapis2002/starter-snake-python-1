@@ -1,4 +1,6 @@
 # from gameboard import Point
+
+#FIX SET_CELL/SET_GRID!!!!!!
 from gameboard import *
 
 #TO DO: fix g
@@ -50,7 +52,7 @@ class Grid ():
         self.width = width
         self.grid = [[0 for col in range(width)]
                      for row in range(height)]
-        self.cells = self.set_grid()
+        self.cells = []
 
     def set_cell(self, coord, value):
         # reachable = point.reachable
@@ -60,9 +62,6 @@ class Grid ():
         
 
     def set_grid(self):
-        # walls = ((0, 5), (1, 0), (1, 1), (1, 5), (2, 3),
-        #          (3, 1), (3, 2), (3, 5), (4, 1), (4, 4), (5, 1))
-        self.cells = []
         for x in range(self.width):
             for y in range(self.height):
                 # value = self.grid[x][y]
