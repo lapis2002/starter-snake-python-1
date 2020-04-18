@@ -27,7 +27,7 @@ def find_food():
 def get_food(foods, gameboard, snake):
     start = gameboard.get_cell([snake.head.x, snake.head.y])
     foods = sorted(foods, key=lambda x: start.distance(x))
-    end = gameboard.get_cell(foods[0][0])
+    end = gameboard.get_cell([foods[0].x, foods[0].y])
     snake.next_move = gameboard.process(start, end)[0]
 
 
