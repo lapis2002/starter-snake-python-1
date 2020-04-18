@@ -52,10 +52,10 @@ class Grid ():
         self.grid = [[0 for col in range(width)]
                      for row in range(height)]
 
-    def set_cell(self, point):
+    def set_cell(self, coord, value):
         # reachable = point.reachable
-        value = point.v
-        self.grid[point.x][point.y] = (value)
+        # value = point.v
+        self.grid[coord[0]][coord[1]] = (value)
 
     def set_grid(self):
         # walls = ((0, 5), (1, 0), (1, 1), (1, 5), (2, 3),
@@ -82,7 +82,7 @@ class Grid ():
                  (3, 1), (3, 2), (3, 5), (4, 4), (5, 1))
 
         start = (0,0)
-        end = (5,5)
+        end = (5,2)
         for x in range(self.width):
             for y in range(self.height):
                 if (x, y) in walls:
@@ -99,7 +99,7 @@ class Grid ():
                     value = 7
                 if x == 4 and y == 1:
                     value = 7
-                self.set_cell(Point([x,y],value))
+                self.set_cell([x,y],value)
                 self.cells.append(Point([x, y], value))
         self.start = self.get_cell(start)
         self.end = self.get_cell(end)
@@ -147,14 +147,18 @@ class Grid ():
         adj.h = adj.distance(end)
         adj.parent = point
         adj.f = adj.g + adj.h
+        self.set_cell([adj.x, adj.y], adj.f)
+        # for y in range(self.height):
+        #     print(self.grid[y])
+        # print()
 
     def process(self, start, end):
         # start: coord of start
         # end: coord of end
         opened = []
         closed = set()
-        # start = self.get_cell(start)
-        # end = self.get_cell(end)
+        start = self.get_cell(start)
+        end = self.get_cell(end)
         opened.append((start, start.f))
         while len(opened) > 0:
             point, f = min(opened, key=lambda x: x[1])
@@ -296,7 +300,7 @@ def a_star (grid, start, end):
     closed = set()
 
     g = GameBoard(grid.height, grid.weight, 1)
-    g.set_cell(Point(start,0))
+    g.set_cell(start,0)
     f = GameBoard(grid.height, grid.weight)
     f.set_cell(start, dist(start, end))
 

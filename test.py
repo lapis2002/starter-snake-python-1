@@ -11,9 +11,10 @@ for y in range(len(grid.grid)):
         else:
             print(". ", end="")
     print()
+print("test eat food")
 print("start (0,0)")
-print("end (5,5)")
-grid.process((0, 0), (5, 5))
+print("end (5,2)")
+grid.process((0, 0), (5, 2))
 
 print("-"*20)
 print("start (5,0)")

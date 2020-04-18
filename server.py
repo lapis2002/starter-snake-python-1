@@ -34,7 +34,7 @@ def next_move (foods, gameboard, opponents, snake):
     for enemy in opponents:
         get_food(foods, gameboard, enemy)
         coord = enemy.head.get_cell_from_direction(enemy.next_move)
-        gameboard.set_cell(Point(coord, DANGER))
+        gameboard.set_cell(coord, DANGER)
 
     get_food(foods, gameboard, snake)
 
@@ -52,19 +52,19 @@ def init(data):
     my_snake = Snake(data["you"], DANGER)
 
     for coord in my_snake.body:
-        grid.set_cell(coord)
+        grid.set_cell([coord.x, coord.y], DANGER)
 
     for food in data["board"]["food"]:
         food = Point([food["x"], food["y"]], FOOD)
         foods.append(food)
-        grid.set_cell(food)
+        grid.set_cell([food.x, food.y], FOOD)
 
     for snake in data["board"]["snakes"]:
         snake = Snake(snake, DANGER)
         if snake.id != my_snake.id:
             opponents.append(snake)
             for coord in snake.body:
-                grid.set_cell(coord)
+                grid.set_cell([coord.x, coord.y], coord.v)
             
     grid.set_grid()
     for y in range(len(grid.grid)):
