@@ -35,7 +35,7 @@ def next_move (foods, gameboard, opponents, snake):
         get_food(foods, gameboard, enemy)
         coord = enemy.head.get_cell_from_direction(enemy.next_move)
         gameboard.set_cell(coord, DANGER)
-        
+
     find_food(foods, gameboard, snake)
     # if snake.health < 30:
     #     find_food(foods, gameboard, snake)
@@ -75,7 +75,7 @@ def init(data):
             for coord in snake.body:
                 grid.set_cell([coord.x, coord.y], coord.v)
             
-    grid.set_grid()
+    # grid.set_grid()
     for y in range(len(grid.grid)):
         for x in range(len(grid.grid[0])):
             if grid.grid[x][y] == 10:
