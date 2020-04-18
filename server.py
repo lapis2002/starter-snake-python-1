@@ -11,7 +11,7 @@ For instructions see https://github.com/BattlesnakeOfficial/starter-snake-python
 """
 
 SNAKE = 1
-FOOD = 3
+FOOD = 7
 E_HEAD = 5
 DANGER = 10
 
@@ -60,6 +60,15 @@ def init(data):
                 grid.set_cell(coord)
             
     grid.set_grid()
+    for y in range(len(grid.grid)):
+        for x in range(len(grid.grid[0])):
+            if grid.grid[x][y] == 10:
+                print("* ", end="")
+            elif grid.grid[x][y] == 7:
+                print("o ", end="")
+            else:
+                print(". ", end="")
+        print()
 
     return my_snake, grid, foods, opponents
 
