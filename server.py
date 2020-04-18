@@ -42,7 +42,7 @@ def next_move (foods, gameboard, opponents, snake):
 
 def find_food(foods, gameboard, snake):
     for food in foods:
-        gameboard.set_cell([food[0], food[1]], SAFE)
+        gameboard.set_cell([food.x, food.y], SAFE)
     get_food(foods, gameboard, snake)
 
 def follow_tail(gameboard, snake):
