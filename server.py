@@ -61,7 +61,7 @@ def init(data):
     my_snake = Snake(data["you"], DANGER)
 
     grid.set_grid()
-    for coord in my_snake.body:
+    for coord in my_snake.body[:-1]:
         grid.set_cell([coord.x, coord.y], DANGER)
 
     for food in data["board"]["food"]:
@@ -73,7 +73,7 @@ def init(data):
         snake = Snake(snake, DANGER)
         if snake.id != my_snake.id:
             opponents.append(snake)
-            for coord in snake.body:
+            for coord in snake.body[:-1]:
                 grid.set_cell([coord.x, coord.y], coord.v)
             
     for y in range(len(grid.grid)):
