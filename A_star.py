@@ -2,7 +2,7 @@
 
 #FIX SET_CELL/SET_GRID!!!!!!
 from gameboard import *
-
+DANGER = 10
 #TO DO: fix g
 class Point():
     def __init__(self, coord, value):
@@ -130,16 +130,20 @@ class Grid ():
     #     path.reverse()
     #     return path
 
+    # def distance(self, p1, p2):
+    #     dist_x = dist_y = 0
+    #     for x in range(p1.x + 1, p2.x + 1):
+    #         dist_x += self.grid[x][1] 
 
     def get_neighbors(self, point):
         neighbors = []
-        if point.x > 0:
+        if point.x > 0 and self.grid[point.x-1][point.y] != DANGER:
             neighbors.append(self.get_cell([point.x-1, point.y]))
-        if point.y > 0:
+        if point.y > 0 and self.grid[point.x][point.y-1] != DANGER:
             neighbors.append(self.get_cell([point.x, point.y-1]))
-        if point.x < self.width-1:
+        if point.x < self.width-1 and self.grid[point.x+1][point.y] != DANGER:
             neighbors.append(self.get_cell([point.x+1, point.y]))
-        if point.y < self.height-1:
+        if point.y < self.height-1 and self.grid[point.x][point.y+1] != DANGER:
             neighbors.append(self.get_cell([point.x, point.y+1]))
         return neighbors
 
