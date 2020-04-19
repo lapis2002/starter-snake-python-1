@@ -75,8 +75,6 @@ def init(data):
             opponents.append(snake)
             for coord in snake.body[:-1]:
                 grid.set_cell([coord.x, coord.y], coord.v)
-
-    print("here")
             
     for y in range(len(grid.grid)):
         for x in range(len(grid.grid[0])):
