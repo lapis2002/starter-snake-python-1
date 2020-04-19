@@ -87,7 +87,6 @@ def init(data):
             else:
                 print(". ", end="")
         print()
-    print("test")
     return my_snake, grid, foods, opponents
 
 
