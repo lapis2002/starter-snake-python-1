@@ -54,6 +54,7 @@ def follow_tail(gameboard, tails, snake):
     snake.next_move = gameboard.process(start, tails)[0]
 
 def random_move(gameboard, snake):
+    print()
 
 def init(data):
     foods = []
