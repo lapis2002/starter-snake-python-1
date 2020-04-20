@@ -11,7 +11,7 @@ For instructions see https://github.com/BattlesnakeOfficial/starter-snake-python
 """
 
 SAFE = 1
-FOOD = 0
+FOOD = 3
 E_HEAD = 5
 DANGER = 10
 
