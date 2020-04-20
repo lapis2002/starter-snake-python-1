@@ -46,6 +46,19 @@ class Point():
         dy = abs(self.y-other.y)
         return dx + dy
 
+    def isGoal(self, goals):
+        for goal in goals:
+            if (self.v == goal.v):
+                return True
+        return False
+
+    def get_heuistic(self, goals):
+        closest = float("inf")
+        for goal in goals:
+            dist = self.distance(goal)
+            closest = min(closest, dist)
+        return closest
+
 class Grid ():
     def __init__(self, height, width):
         self.height = height
@@ -107,6 +120,8 @@ class Grid ():
         self.end = self.get_cell(end)
 
 
+    
+
     def get_path(self, start, end):
         path = []
         dir = []
@@ -147,10 +162,10 @@ class Grid ():
             neighbors.append(self.get_cell([point.x, point.y+1]))
         return neighbors
 
-    def update_cell(self, adj, point, end):
+    def update_cell(self, adj, point, goals):
         adj.g = point.g + adj.v
         # adj.h = self.get_heuistic(adj, end)
-        adj.h = adj.distance(end)
+        adj.h = adj.get_heuistic(goals)
         adj.parent = point
         adj.f = adj.g + adj.h
         self.set_cell([adj.x, adj.y], adj.f)
@@ -158,7 +173,7 @@ class Grid ():
         #     print(self.grid[y])
         # print()
 
-    def process(self, start, end):
+    def process(self, start, goals):
         opened = []
         closed = set()
         # start = self.get_cell(start)
@@ -170,8 +185,8 @@ class Grid ():
 
             closed.add(point)
 
-            if point is end:
-                return self.get_path(start, end)
+            if point.isGoal(goals):
+                return self.get_path(start, [point.x, point.y])
 
             neighbors = self.get_neighbors(point)
             for neighbor in neighbors:
@@ -180,9 +195,9 @@ class Grid ():
                         print("neighbor", neighbor.g)
                         print("current", point.g + neighbor.v)
                         if neighbor.g > neighbor.v + point.g:
-                            self.update_cell(neighbor, point, end)
+                            self.update_cell(neighbor, point, goals)
                     else:
-                        self.update_cell(neighbor, point, end)
+                        self.update_cell(neighbor, point, goals)
                         opened.append(neighbor)
 
     # def a_star (self, start, end):

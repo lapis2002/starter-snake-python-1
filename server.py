@@ -11,7 +11,7 @@ For instructions see https://github.com/BattlesnakeOfficial/starter-snake-python
 """
 
 SAFE = 1
-FOOD = 7
+FOOD = 0
 E_HEAD = 5
 DANGER = 10
 
@@ -26,9 +26,9 @@ def find_food():
 
 def get_food(foods, gameboard, snake):
     start = gameboard.get_cell([snake.head.x, snake.head.y])
-    foods = sorted(foods, key=lambda x: start.distance(x))
-    end = gameboard.get_cell([foods[0].x, foods[0].y])
-    snake.next_move = gameboard.process(start, end)[0]
+    # foods = sorted(foods, key=lambda x: start.distance(x))
+    # end = gameboard.get_cell([foods[0].x, foods[0].y])
+    snake.next_move = gameboard.process(start, foods)[0]
 
 def next_move (foods, gameboard, opponents, snake):
     for enemy in opponents:
@@ -43,8 +43,8 @@ def next_move (foods, gameboard, opponents, snake):
     #     get_food(foods, gameboard, snake)
 
 def find_food(foods, gameboard, snake):
-    for food in foods:
-        gameboard.set_cell([food.x, food.y], 0)
+    # for food in foods:
+    #     gameboard.set_cell([food.x, food.y], 0)
     get_food(foods, gameboard, snake)
 
 def follow_tail(gameboard, snake):
@@ -58,11 +58,11 @@ def init(data):
     opponents = []
     # data = cherrypy.request.json
     grid = Grid(data["board"]["height"], data["board"]["width"])
-    my_snake = Snake(data["you"], DANGER)
+    my_snake = Snake(data["you"])
 
     grid.set_grid()
-    for coord in my_snake.body[:-1]:
-        grid.set_cell([coord.x, coord.y], DANGER)
+    for coord in my_snake.body:
+        grid.set_cell([coord.x, coord.y], coord.v)
 
     for food in data["board"]["food"]:
         food = Point([food["x"], food["y"]], FOOD)
@@ -70,10 +70,10 @@ def init(data):
         grid.set_cell([food.x, food.y], FOOD)
 
     for snake in data["board"]["snakes"]:
-        snake = Snake(snake, DANGER)
+        snake = Snake(snake)
         if snake.id != my_snake.id:
             opponents.append(snake)
-            for coord in snake.body[:-1]:
+            for coord in snake.body:
                 grid.set_cell([coord.x, coord.y], coord.v)
             
     for y in range(len(grid.grid)):
