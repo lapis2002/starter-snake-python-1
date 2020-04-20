@@ -45,20 +45,15 @@ def next_move (foods, gameboard, opponents, snake):
     #     follow_tail(gameboard, tails, snake)
     find_food(foods, gameboard, snake)
 
-    # if snake.health < 30:
-    #     find_food(foods, gameboard, snake)
-    # else:
-    #     get_food(foods, gameboard, snake)
-
 def find_food(foods, gameboard, snake):
-    # for food in foods:
-    #     gameboard.set_cell([food.x, food.y], 0)
+    print(len(foods))
     get_food(foods, gameboard, snake)
 
 def follow_tail(gameboard, tails, snake):
     start = gameboard.get_cell([snake.head.x, snake.head.y])
     snake.next_move = gameboard.process(start, tails)[0]
 
+def random_move(gameboard, snake):
 
 def init(data):
     foods = []
