@@ -34,17 +34,19 @@ def next_move (foods, gameboard, opponents, snake):
     # tails = [snake.tail]
     tails = []
 
-    # for enemy in opponents:
-    #     tails.append(enemy.tail)
-    #     get_food(foods, gameboard, enemy)
-    #     coord = enemy.head.get_cell_from_direction(enemy.next_move)
-    #     gameboard.set_cell(coord, DANGER)
-
     for enemy in opponents:
+        tails.append(enemy.tail)
+        get_food(foods, gameboard, enemy)
+        coord = enemy.head.get_cell_from_direction(enemy.next_move)
+        gameboard.set_cell(coord, DANGER)
         head = enemy.head
         neighbors = gameboard.get_neighbors(head)
         for neighbor in neighbors:
             gameboard.set_cell([neighbor.x, neighbor.y], DANGER)
+
+
+    # for enemy in opponents:
+        
     # if snake.health < 50:
     #     find_food(foods, gameboard, snake)
     # else:
