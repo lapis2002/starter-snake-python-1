@@ -31,7 +31,8 @@ def get_food(foods, gameboard, snake):
     snake.next_move = gameboard.process(start, foods)[0]
 
 def next_move (foods, gameboard, opponents, snake):
-    tails = [snake.tail]
+    # tails = [snake.tail]
+    tails = []
 
     for enemy in opponents:
         tails.append(enemy.tail)
