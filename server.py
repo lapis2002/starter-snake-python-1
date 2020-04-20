@@ -62,7 +62,7 @@ def random_move(gameboard, snake):
         next_move = "left"
     elif random_neighbor.y < snake.head.y:
         next_move = "up"
-    elif random_move.y > snake.head.y:
+    elif random_neighbor.y > snake.head.y:
         next_move = "down"
     snake.next_move = next_move
 
