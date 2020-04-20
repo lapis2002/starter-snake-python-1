@@ -47,11 +47,11 @@ def next_move (foods, gameboard, opponents, snake):
 
     # for enemy in opponents:
         
-    # if snake.health < 50:
-    #     find_food(foods, gameboard, snake)
-    # else:
-    #     random_move(gameboard, snake)
-    find_food(foods, gameboard, snake)
+    if snake.health < 70:
+        find_food(foods, gameboard, snake)
+    else:
+        random_move(gameboard, snake)
+    # find_food(foods, gameboard, snake)
 
 def find_food(foods, gameboard, snake):
     get_food(foods, gameboard, snake)
