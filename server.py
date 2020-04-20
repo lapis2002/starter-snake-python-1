@@ -57,7 +57,14 @@ def random_move(gameboard, snake):
     possible_neighbors = gameboard.get_neighbors(snake.head)
     #gotta fix this to the most reachable #cells
     random_neighbor = random.choice(possible_neighbors)
-    snake.next_move = gameboard.get_path(snake.head, random_neighbor)
+    next_move = "right"
+    if random_neighbor.x < snake.head.x:
+        next_move = "left"
+    elif random_neighbor.y < snake.head.y:
+        next_move = "up"
+    elif random_move.y > snake.head.y:
+        next_move = "down"
+    snake.next_move = next_move
 
 def init(data):
     foods = []
