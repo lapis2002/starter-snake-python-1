@@ -67,7 +67,7 @@ def random_move(gameboard, snake):
     while not(is_valid):
         random_neighbor = random.choice(possible_neighbors)
         result = gameboard.get_neighbors(random_neighbor)
-        is_valid = len(result) > 1
+        is_valid = len(result) > 0
 
     next_move = "right"
     if random_neighbor.x < snake.head.x:
