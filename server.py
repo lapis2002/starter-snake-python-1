@@ -61,6 +61,11 @@ def follow_tail(gameboard, tails, snake):
     snake.next_move = gameboard.process(start, tails)[0]
 
 def random_move(gameboard, snake):
+    for enemy in opponents:
+        tails.append(enemy.tail)
+        get_food(foods, gameboard, enemy)
+        coord = enemy.head.get_cell_from_direction(enemy.next_move)
+        gameboard.set_cell(coord, DANGER)
     possible_neighbors = gameboard.get_neighbors(snake.head)
     #gotta fix this to the most reachable #cells
     is_valid = False
