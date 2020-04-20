@@ -54,7 +54,6 @@ def next_move (foods, gameboard, opponents, snake):
     find_food(foods, gameboard, snake)
 
 def find_food(foods, gameboard, snake):
-    print(len(foods))
     get_food(foods, gameboard, snake)
 
 def follow_tail(gameboard, tails, snake):
