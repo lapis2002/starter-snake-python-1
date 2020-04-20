@@ -16,7 +16,8 @@ class Snake(Point):
         for coord in snake["body"][:-1]:
             coord = Point([coord["x"], coord["y"]], DANGER)
             body.append(coord)
-        body.append(Point([coord["x"], coord["y"]], SAFE))
+        body.append(
+            Point([snake["body"][-1]["x"], snake["body"][-1]["y"]], SAFE))
 
         return body, len(body)
 
