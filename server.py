@@ -100,7 +100,7 @@ def init(data):
     #         else:
     #             print(". ", end="")
     #     print()
-    print(len(grid.grid))
+    # print(len(grid.grid))
     return my_snake, grid, foods, opponents
 
 
