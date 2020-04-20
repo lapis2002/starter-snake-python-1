@@ -192,8 +192,8 @@ class Grid ():
             for neighbor in neighbors:
                 if neighbor not in closed:
                     if neighbor in opened:
-                        print("neighbor", neighbor.g)
-                        print("current", point.g + neighbor.v)
+                        # print("neighbor", neighbor.g)
+                        # print("current", point.g + neighbor.v)
                         if neighbor.g > neighbor.v + point.g:
                             self.update_cell(neighbor, point, goals)
                     else:

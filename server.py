@@ -94,6 +94,8 @@ def init(data):
         foods.append(food)
         grid.set_cell([food.x, food.y], FOOD)
 
+    print(len(foods))
+
     for snake in data["board"]["snakes"]:
         snake = Snake(snake)
         if snake.id != my_snake.id:
