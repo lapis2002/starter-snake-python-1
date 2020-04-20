@@ -39,11 +39,11 @@ def next_move (foods, gameboard, opponents, snake):
         get_food(foods, gameboard, enemy)
         coord = enemy.head.get_cell_from_direction(enemy.next_move)
         gameboard.set_cell(coord, DANGER)
-    # if snake.health < 30 or snake.health > 90:
-    #     find_food(foods, gameboard, snake)
-    # else:
-    #     follow_tail(gameboard, tails, snake)
-    find_food(foods, gameboard, snake)
+    if snake.health < 30 or snake.health > 90:
+        find_food(foods, gameboard, snake)
+    else:
+        random_move(gameboard, snake)
+    # find_food(foods, gameboard, snake)
 
 def find_food(foods, gameboard, snake):
     print(len(foods))
@@ -54,7 +54,10 @@ def follow_tail(gameboard, tails, snake):
     snake.next_move = gameboard.process(start, tails)[0]
 
 def random_move(gameboard, snake):
-    print()
+    possible_neighbors = gameboard.get_neighbors(snake.head)
+    #gotta fix this to the most reachable #cells
+    random_neighbor = random.choice(possible_neighbors)
+    snake.next_move = gameboard.get_path(snake.head, random_neighbor)
 
 def init(data):
     foods = []
