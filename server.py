@@ -28,10 +28,10 @@ def get_food(foods, gameboard, snake):
     # end = gameboard.get_cell([foods[0].x, foods[0].y])
     # print(type(gameboard.process(start, foods)))
     if ((gameboard.process(start, foods)) != None):
-        print(gameboard.process(start, foods))
+        # print(gameboard.process(start, foods))
         snake.next_move = gameboard.process(start, foods)[0]
     else:
-        print("a")
+        # print("a")
         random_move(gameboard, snake)
         
 
@@ -51,7 +51,7 @@ def next_move (foods, gameboard, opponents, snake):
     if snake.health > 80 or len(foods) < 2:
         random_move(gameboard, snake)
     else:
-        print("b")
+        # print("b")
         find_food(foods, gameboard, snake)
         
     # find_food(foods, gameboard, snake)
@@ -71,9 +71,9 @@ def random_move(gameboard, snake):
         random_neighbor = random.choice(possible_neighbors)
         result = gameboard.get_neighbors(random_neighbor)
         is_valid = len(result) > 0
-    print("head", [snake.head.x, snake.head.y])
-    for i in possible_neighbors:
-        print([i.x, i.y])
+    # print("head", [snake.head.x, snake.head.y])
+    # for i in possible_neighbors:
+    #     print([i.x, i.y])
 
     next_move = "right"
     if random_neighbor.x < snake.head.x:
@@ -109,17 +109,17 @@ def init(data):
             for coord in snake.body:
                 grid.set_cell([coord.x, coord.y], coord.v)
             
-    for y in range(len(grid.grid)):
-        for x in range(len(grid.grid[0])):
-            if x == my_snake.head.x and y == my_snake.head.y:
-                print("@ ", end ="")
-            elif grid.grid[x][y] == DANGER:
-                print("* ", end="")
-            elif grid.grid[x][y] == FOOD:
-                print("o ", end="")
-            else:
-                print(". ", end="")
-        print()
+    # for y in range(len(grid.grid)):
+    #     for x in range(len(grid.grid[0])):
+    #         if x == my_snake.head.x and y == my_snake.head.y:
+    #             print("@ ", end ="")
+    #         elif grid.grid[x][y] == DANGER:
+    #             print("* ", end="")
+    #         elif grid.grid[x][y] == FOOD:
+    #             print("o ", end="")
+    #         else:
+    #             print(". ", end="")
+    #     print()
     # print(len(grid.grid))
     return my_snake, grid, foods, opponents
 
