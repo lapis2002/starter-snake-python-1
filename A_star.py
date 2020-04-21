@@ -133,7 +133,10 @@ class Grid ():
 
         path.append(current.get_direction())
         # print("path return", path[::-1])
-        return path[::-1]
+        if len(path):
+            return path[::-1]
+        else:
+            return []
     
     # def get_path(self):
     #     cell = self.end
