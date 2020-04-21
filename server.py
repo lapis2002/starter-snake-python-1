@@ -30,13 +30,12 @@ def get_food(foods, gameboard, snake):
         print(gameboard.process(start, foods))
         snake.next_move = gameboard.process(start, foods)[0]
     else:
+        print("a")
         random_move(gameboard, snake)
         
 
 def next_move (foods, gameboard, opponents, snake):
-    # tails = [snake.tail]
     tails = []
-
     for enemy in opponents:
         tails.append(enemy.tail)
         get_food(foods, gameboard, enemy)
@@ -51,11 +50,10 @@ def next_move (foods, gameboard, opponents, snake):
     if snake.health > 80 or len(foods) < 2:
         random_move(gameboard, snake)
     else:
+        print("b")
         find_food(foods, gameboard, snake)
         
-
     # find_food(foods, gameboard, snake)
-
 def find_food(foods, gameboard, snake):
     get_food(foods, gameboard, snake)
     
