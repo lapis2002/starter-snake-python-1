@@ -49,7 +49,7 @@ def next_move (foods, gameboard, opponents, snake):
 
     # for enemy in opponents:
     # print(snake.health)
-    if snake.health > 70 or len(foods) < 2:
+    if snake.health > 80 or len(foods) < 2:
         random_move(gameboard, snake)
     else:
         find_food(foods, gameboard, snake)
