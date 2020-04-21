@@ -27,9 +27,10 @@ def get_food(foods, gameboard, snake):
     # foods = sorted(foods, key=lambda x: start.distance(x))
     # end = gameboard.get_cell([foods[0].x, foods[0].y])
     # print(type(gameboard.process(start, foods)))
-    if (gameboard.process(start, foods) is not None):
+    path = gameboard.process(start, foods)
+    if (path  is not None):
         # print(gameboard.process(start, foods))
-        snake.next_move = gameboard.process(start, foods)[0]
+        snake.next_move = path[0]
     else:
         # print("a")
         random_move(gameboard, snake)
