@@ -51,6 +51,9 @@ def next_move (foods, gameboard, opponents, snake):
         random_move(gameboard, snake)
     else:
         find_food(foods, gameboard, snake)
+        if snake.next_move == "":
+            random_move(gameboard, snake)
+
     # find_food(foods, gameboard, snake)
 
 def find_food(foods, gameboard, snake):
