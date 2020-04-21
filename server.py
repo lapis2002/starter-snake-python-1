@@ -10,7 +10,7 @@ This is a simple Battlesnake server written in Python.
 For instructions see https://github.com/BattlesnakeOfficial/starter-snake-python/README.md
 """
 
-SAFE = 1
+SAFE = 0
 FOOD = 3
 E_HEAD = 5
 DANGER = 10
@@ -64,6 +64,8 @@ def follow_tail(gameboard, tails, snake):
     snake.next_move = gameboard.process(start, tails)[0]
 
 def random_move(gameboard, snake):
+    tail_coord = [snake.tail.x, snake.tail.y]
+    gameboard.set_cell(tail_coord, SAFE)
     possible_neighbors = gameboard.get_neighbors(snake.head)
     #gotta fix this to the most reachable #cells
     is_valid = False

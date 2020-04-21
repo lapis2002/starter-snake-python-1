@@ -178,6 +178,7 @@ class Grid ():
         # print()
 
     def process(self, start, goals):
+        #return path if found, NoneType otherwise
         opened = []
         closed = set()
         # start = self.get_cell(start)
