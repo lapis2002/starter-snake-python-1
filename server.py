@@ -28,6 +28,7 @@ def get_food(foods, gameboard, snake):
     # end = gameboard.get_cell([foods[0].x, foods[0].y])
     # print(type(gameboard.process(start, foods)))
     if (len(gameboard.process(start, foods))):
+        print(gameboard.process(start, foods))
         snake.next_move = gameboard.process(start, foods)[0]
     else:
         print("a")
