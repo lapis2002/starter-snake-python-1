@@ -190,7 +190,9 @@ class Grid ():
             closed.add(point)
 
             if point.isGoal(goals):
-                return self.get_path(start, point)
+                a = self.get_path(start, point)
+                print("class", type(a))
+                return a
 
             neighbors = self.get_neighbors(point)
             for neighbor in neighbors:
