@@ -112,9 +112,9 @@ def init(data):
         for x in range(len(grid.grid[0])):
             if x == my_snake.head.x and y == my_snake.head.y:
                 print("@ ", end ="")
-            elif grid.grid[x][y] == 10:
+            elif grid.grid[x][y] == DANGER:
                 print("* ", end="")
-            elif grid.grid[x][y] == 7:
+            elif grid.grid[x][y] == FOOD:
                 print("o ", end="")
             else:
                 print(". ", end="")
