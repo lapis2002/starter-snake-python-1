@@ -79,6 +79,7 @@ def random_move(gameboard, snake):
     snake.next_move = next_move
 
 def init(data):
+    print("new game")
     foods = []
     opponents = []
     # data = cherrypy.request.json
