@@ -21,8 +21,6 @@ def dist(p1, p2):
     dy = abs(p1[1]-p2[1])
     return dx + dy
 
-def find_food():
-    return None
 
 def get_food(foods, gameboard, snake):
     start = gameboard.get_cell([snake.head.x, snake.head.y])
@@ -51,13 +49,14 @@ def next_move (foods, gameboard, opponents, snake):
         random_move(gameboard, snake)
     else:
         find_food(foods, gameboard, snake)
-        if snake.next_move == "":
-            random_move(gameboard, snake)
+        
 
     # find_food(foods, gameboard, snake)
 
 def find_food(foods, gameboard, snake):
     get_food(foods, gameboard, snake)
+    if snake.next_move == "":
+        random_move(gameboard, snake)
 
 def follow_tail(gameboard, tails, snake):
     start = gameboard.get_cell([snake.head.x, snake.head.y])
