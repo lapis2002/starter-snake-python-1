@@ -74,7 +74,7 @@ def random_move(gameboard, snake):
         random_neighbor = random.choice(possible_neighbors)
         result = gameboard.get_neighbors(random_neighbor)
         is_valid = len(result) > 0
-    print("head", [snake.x, snake.y])
+    print("head", [snake.head.x, snake.head.y])
     for i in possible_neighbors:
         print([i.x, i.y])
 
