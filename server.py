@@ -27,7 +27,7 @@ def get_food(foods, gameboard, snake):
     # foods = sorted(foods, key=lambda x: start.distance(x))
     # end = gameboard.get_cell([foods[0].x, foods[0].y])
     # print(type(gameboard.process(start, foods)))
-    if ((gameboard.process(start, foods)) is not None):
+    if (gameboard.process(start, foods) is not None):
         # print(gameboard.process(start, foods))
         snake.next_move = gameboard.process(start, foods)[0]
     else:
