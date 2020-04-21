@@ -26,7 +26,7 @@ def get_food(foods, gameboard, snake):
     start = gameboard.get_cell([snake.head.x, snake.head.y])
     # foods = sorted(foods, key=lambda x: start.distance(x))
     # end = gameboard.get_cell([foods[0].x, foods[0].y])
-    if (gameboard.process(start, foods)):
+    if (len(gameboard.process(start, foods))):
         snake.next_move = gameboard.process(start, foods)[0]
     else:
         random_move(gameboard, snake)
@@ -59,8 +59,7 @@ def next_move (foods, gameboard, opponents, snake):
 
 def find_food(foods, gameboard, snake):
     get_food(foods, gameboard, snake)
-    if snake.next_move == "":
-        random_move(gameboard, snake)
+    
 
 def follow_tail(gameboard, tails, snake):
     start = gameboard.get_cell([snake.head.x, snake.head.y])
