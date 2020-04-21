@@ -48,7 +48,7 @@ def next_move (foods, gameboard, opponents, snake):
 
 
     # for enemy in opponents:
-    print(snake.health)
+    # print(snake.health)
     if snake.health > 70 or len(foods) < 2:
         random_move(gameboard, snake)
     else:
@@ -103,7 +103,7 @@ def init(data):
         foods.append(food)
         grid.set_cell([food.x, food.y], FOOD)
 
-    print(len(foods))
+    # print(len(foods))
 
     for snake in data["board"]["snakes"]:
         snake = Snake(snake)
@@ -123,7 +123,7 @@ def init(data):
     #         else:
     #             print(". ", end="")
     #     print()
-    print(len(grid.grid))
+    # print(len(grid.grid))
     return my_snake, grid, foods, opponents
 
 
