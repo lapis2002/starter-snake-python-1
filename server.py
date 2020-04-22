@@ -49,7 +49,7 @@ def next_move (foods, gameboard, opponents, snake):
         #     gameboard.set_cell([neighbor.x, neighbor.y], DANGER)
 
     print(snake.health)
-    if snake.health > 80 or len(foods) < 2:
+    if snake.health > 80 or len(foods) < 1:
         random_move(gameboard, snake)
     else:
         # print("b")
