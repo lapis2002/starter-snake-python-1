@@ -66,7 +66,8 @@ def follow_tail(gameboard, tails, snake):
 
 def random_move(gameboard, snake):
     tail_coord = [snake.tail.x, snake.tail.y]
-    gameboard.set_cell(tail_coord, SAFE)
+    if snake.len > 2:
+        gameboard.set_cell(tail_coord, SAFE)
     possible_neighbors = gameboard.get_neighbors(snake.head)
     #gotta fix this to the most reachable #cells
     is_valid = False
