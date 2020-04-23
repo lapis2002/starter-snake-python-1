@@ -112,6 +112,7 @@ class Snake(Point):
             return False
         is_valid = False
         while not(is_valid):
+            #there's error in the result
             random_neighbor = random.choice(possible_neighbors)
             result = gameboard.get_neighbors(random_neighbor)
             is_valid = len(result) > 0
