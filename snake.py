@@ -158,7 +158,7 @@ class Snake(Point):
             return ("left", 0)
         area = {}
         for neighbor in neighbors:
-            direction = self.head.get_direction()
+            direction = self.head.get_direction(neighbor)
             coord = self.move_toward(gameboard, neighbor)
             area[direction] = gameboard.count_reachable_area(neighbor)
             gameboard.set_back(self.tail, neighbor)
