@@ -16,7 +16,7 @@ class Snake(Point):
 
     def set_body(self, snake):
         head_coord = (snake["body"][0]["x"], snake["body"][0]["y"])
-        body = [Point([head_coord["x"], head_coord["y"]], SNAKE_HEAD)]
+        body = [Point([head_coord[0], head_coord[1]], SNAKE_HEAD)]
 
         for coord in snake["body"][1:]:
             coord = Point([coord["x"], coord["y"]], DANGER)
