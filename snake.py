@@ -128,6 +128,7 @@ class Snake(Point):
                 # or self.is_threaten(gameboard, ))
 
     def is_trapped(self, gameboard, next_head ,tails):
+        print("check trap?")
         start = gameboard.get_cell([next_head.x, next_head.y])
         path = gameboard.a_star(start, tails)
         if (path is not None):
@@ -137,6 +138,7 @@ class Snake(Point):
         
     def is_threaten(self, gameboard, enemies, next_head):
         enemy_heads = [enemy.head for enemy in enemies]
+        for enemy_head in enemy_heads:
         if next_head in enemy_heads:
             if self.len <= enemies[enemy_heads.index(next_head)]:
                 return True
@@ -159,6 +161,7 @@ class Snake(Point):
 
     def is_reducing_reachable_area(self, gameboard, next_head):
         #move to this point will reduce reachable area
+        print("Do I move to less reachable area?")
         coord = self.move_toward(gameboard, next_head)
         next_area = gameboard.count_reachable_area(next_head)
         gameboard.set_back(self.tail, next_head)
