@@ -44,6 +44,7 @@ class Snake(Point):
         return [self.tail.x, self.tail.y]
 
     def eat_closest_food(self, gameboard, foods):
+        print("let's find some food!")
         for food in foods:
             if len(gameboard.get_surroundings(food)) > 4:
                 foods.remove(food)
@@ -68,6 +69,7 @@ class Snake(Point):
         #     random_neighbor = random.choice(possible_neighbors)
         #     result = gameboard.get_neighbors(random_neighbor)
         #     is_valid = len(result) > 0
+        print("hmm.. where should I go?")
         moves = self.get_good_moves(gameboard, tails)
         if moves:
             self.next_move = random.choice(moves)
@@ -129,6 +131,7 @@ class Snake(Point):
         return False
 
     def follow_tail(self, gameboard):
+        print("I dont know where to go...")
         path = gameboard.a_star(self.head, [self.tail])
         if (path is not None):
             self.next_move = path[0]

@@ -119,7 +119,7 @@ def init(data):
             else:
                 print(". ", end="")
         print()
-    # print(len(grid.grid))
+    print("grid works!")
     return my_snake, grid, foods, opponents
 
 class Battlesnake(object):
