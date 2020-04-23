@@ -167,6 +167,7 @@ class Snake(Point):
         next_area = gameboard.count_reachable_area(next_head)
         gameboard.set_back(self.tail, next_head)
         current_area = gameboard.count_reachable_area(self.head)
+        print("now I have", current_area, "then I may have", next_area)
         if current_area > next_area:
             return True
         return False        
