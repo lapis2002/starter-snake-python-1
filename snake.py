@@ -58,7 +58,7 @@ class Snake(Point):
         for neighbor in neighbors:
             if not(self.is_good_move(gameboard, neighbor, enemies, tails)):
                 neighbors.remove(neighbor)
-        print("get_good_moves responded, does it work?")
+        # print("get_good_moves responded, does it work?")
         print("there are", len(neighbors), "neighbors left.")
         moves = [self.head.get_direction(neighbor)
                  for neighbor in neighbors]
@@ -122,7 +122,7 @@ class Snake(Point):
     # def is_bad_move(self, gameboard):
 
     def is_good_move(self, gameboard, next_head, enemies, tails):
-        print("is_good_move responded")
+        # print("is_good_move responded")
         return not(self.is_reducing_reachable_area(gameboard, next_head) 
                 # or self.is_trapped(gameboard, next_head, tails)) 
                 or self.is_threaten(gameboard,enemies, next_head))
