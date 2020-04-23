@@ -53,6 +53,7 @@ class Snake(Point):
         print("there are", len(neighbors), "neighbors left.")
         moves = [self.head.get_direction(neighbor)
                  for neighbor in neighbors]
+        print("let's see what moves we got", moves)
 
     def move_toward(self, gameboard, next_cell):
         gameboard.set_cell([next_cell.x, next_cell.y], DANGER)
