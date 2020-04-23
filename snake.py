@@ -33,7 +33,7 @@ class Snake(Point):
                 print("how about this?")
                 if not(self.random_good_move(gameboard, tails)):
                     print("and this?")
-                    if not(self.follow_tail(gameboard)):
+                    if not(self.follow_tail(gameboard, tails)):
                         if not(self.random_move(gameboard)):
                             print("I'm done")
         else:
@@ -153,7 +153,11 @@ class Snake(Point):
             return True
         return False
 
-    def follow_tail(self, gameboard):
+    def follow_tail(self, gameboard, tails):
+        if self.tail.x == self.head.x and self.tail.y == self.head.y:
+            self.next_move = self.random_good_move(gameboard, tails)
+            return True
+             
         print("I dont know where to go...")
         path = gameboard.a_star(self.head, [self.tail])
         if (path is not None):
