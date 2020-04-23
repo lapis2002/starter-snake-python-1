@@ -50,6 +50,7 @@ class Snake(Point):
         start = gameboard.get_cell([self.head.x, self.head.y])
         path = gameboard.a_star(start, foods)
         if (path is not None):
+            print("eat food \m/")
             self.next_move = path[0]
             return True
         else:
@@ -69,6 +70,7 @@ class Snake(Point):
         moves = self.get_good_moves(gameboard, tails)
         if moves:
             self.next_move = random.choice(moves)
+            print("I'm lost on the life path..")
             return True
         return False
 
@@ -128,6 +130,7 @@ class Snake(Point):
         path = gameboard.a_star(self.head, [self.tail])
         if (path is not None):
             self.next_move = path[0]
+            print("finding happiness ...")
             return True
         else:
             return False
