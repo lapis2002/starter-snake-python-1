@@ -108,17 +108,17 @@ def init(data):
             for coord in snake.body:
                 grid.set_cell([coord.x, coord.y], coord.v)
             
-    # for y in range(len(grid.grid)):
-    #     for x in range(len(grid.grid[0])):
-    #         if x == my_snake.head.x and y == my_snake.head.y:
-    #             print("@ ", end ="")
-    #         elif grid.grid[x][y] == DANGER:
-    #             print("* ", end="")
-    #         elif grid.grid[x][y] == FOOD:
-    #             print("o ", end="")
-    #         else:
-    #             print(". ", end="")
-    #     print()
+    for y in range(len(grid.grid)):
+        for x in range(len(grid.grid[0])):
+            if x == my_snake.head.x and y == my_snake.head.y:
+                print("@ ", end ="")
+            elif grid.grid[x][y] == DANGER:
+                print("* ", end="")
+            elif grid.grid[x][y] == FOOD:
+                print("o ", end="")
+            else:
+                print(". ", end="")
+        print()
     # print(len(grid.grid))
     return my_snake, grid, foods, opponents
 
