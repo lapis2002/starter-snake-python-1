@@ -27,8 +27,11 @@ class Snake(Point):
             tails.append(enemy.tail)
         self.next_move = "left"
         if self.health < 75 and len(foods) > 0:
+            print("let's check this")
             if not(self.eat_closest_food(gameboard, foods)):
+                print("how about this?")
                 if not(self.random_good_move(gameboard, tails)):
+                    print("and this?")
                     self.follow_tail(gameboard)
 
     def get_good_moves(self, gameboard, tails):
