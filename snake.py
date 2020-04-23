@@ -139,9 +139,9 @@ class Snake(Point):
     def is_threaten(self, gameboard, enemies, next_head):
         enemy_heads = [enemy.head for enemy in enemies]
         for enemy_head in enemy_heads:
-        if next_head in enemy_heads:
-            if self.len <= enemies[enemy_heads.index(next_head)]:
-                return True
+            if next_head in gameboard.get_neighbors(enemy_head):
+                if self.len <= enemies[enemy_heads.index(next_head)]:
+                    return True
         return False
 
     def count_next_reachable_area(self, gameboard):
