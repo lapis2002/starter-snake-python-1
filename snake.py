@@ -39,8 +39,8 @@ class Snake(Point):
         else:
             if not(self.random_good_move(gameboard, tails)):
                 print("and this?")
-                if not(self.follow_tail(gameboard)):
-                    if not(self.follow_tail(gameboard)):
+                if not(self.follow_tail(gameboard, tails)):
+                    if not(self.follow_tail(gameboard, tails)):
                         if not(self.random_move(gameboard)):
                             print("I'm done")
         
