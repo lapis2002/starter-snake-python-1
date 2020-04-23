@@ -33,17 +33,26 @@ class Snake(Point):
                 print("how about this?")
                 if not(self.random_good_move(gameboard, tails)):
                     print("and this?")
-                    if not(self.follow_tail(gameboard, tails)):
-                        if not(self.random_move(gameboard)):
-                            print("I'm done")
-        else:
-            if not(self.random_good_move(gameboard, tails)):
-                print("and this?")
+                    if not(self.get_not_bad_move(gameboard)):
+                        if not(self.follow_tail(gameboard, tails)):
+                            if not(self.random_move(gameboard)):
+                                print("I'm done")
+        elif not(self.random_good_move(gameboard, tails)):
+            print("and this?")
+            if not(self.get_not_bad_move(gameboard)):
                 if not(self.follow_tail(gameboard, tails)):
-                    if not(self.follow_tail(gameboard, tails)):
-                        if not(self.random_move(gameboard)):
-                            print("I'm done")
+                    if not(self.random_move(gameboard)):
+                        print("I'm done")
+
+        # elif not(self.get_not_bad_move(gameboard)):
+        #     if not(self.follow_tail(gameboard, tails)):
+        #         if not(self.random_move(gameboard)):
+        #             print("I'm done")
         
+        # elif not(self.follow_tail(gameboard, tails)):
+        #     if not(self.random_move(gameboard)):
+        #         print("I'm done")
+
     def get_good_moves(self, gameboard, tails):
         neighbors = gameboard.get_neighbors(self.head)
         for neighbor in neighbors:
@@ -55,6 +64,14 @@ class Snake(Point):
                  for neighbor in neighbors]
         print("let's see what moves we got", moves)
         return moves
+
+    '''next best move in case no move leads to better reachable area'''
+    def get_not_bad_move (self, gameboard):
+        next_move, next_area = count_next_reachable_area(gameboard)
+        if next_area == 0:
+            return False
+        else:
+            self.next_move = next_move
 
     def move_toward(self, gameboard, next_cell):
         gameboard.set_cell([next_cell.x, next_cell.y], DANGER)
