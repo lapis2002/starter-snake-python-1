@@ -1,22 +1,38 @@
-from A_star import *
-grid = Grid(6, 6)
-grid.init_grid()
-print(grid.grid)
+from gameboard import *
+grid = Grid(11, 11)
+grid.set_grid()
+grid.test()
+# print(grid.grid)
 for y in range(len(grid.grid)):
     for x in range(len(grid.grid[0])):
         if grid.grid[x][y] == 10:
             print("* ", end="")
-        elif grid.grid[x][y] == 7:
+        elif grid.grid[x][y] == 3:
             print("o ", end="")
+        elif x == 2 and y == 5:
+            print("@ ", end="")
         else:
             print(". ", end="")
     print()
-print("test eat food")
-print("start (0,0)")
-print("end (5,2)")
-grid.process((0, 0), (5, 2))
+cell = grid.get_cell((2, 5))
 
-print("-"*20)
-print("start (5,0)")
-print("end (5,5)")
-grid.process((5, 0), (5, 5))
+print(grid.count_reachable_area(cell))
+
+print("check neighbor")
+neighbors = grid.get_neighbors(cell)
+grid.set_cell((1, 6), 0)
+for y in range(len(grid.grid)):
+    for x in range(len(grid.grid[0])):
+        if grid.grid[x][y] == 10:
+            print("* ", end="")
+        elif grid.grid[x][y] == 3:
+            print("o ", end="")
+        elif x == 2 and y == 5:
+            print("@ ", end="")
+        else:
+            print(". ", end="")
+    print()
+for neighbor in neighbors:
+    print("direction:", cell.get_direction(neighbor))
+    print(grid.count_reachable_area(neighbor))
+

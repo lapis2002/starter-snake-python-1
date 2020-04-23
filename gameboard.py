@@ -69,8 +69,6 @@ class Grid ():
         self.width = width
         self.grid = [[SAFE for col in range(width)]
                      for row in range(height)]
-        self.next_stage = [[SAFE for col in range(width)]
-                            for row in range(height)]
         self.cells = []
 
     def set_cell(self, coord, value):
@@ -84,6 +82,20 @@ class Grid ():
 
     # def set_back_to_current_stage(self, coord, value):
     #     self.grid[coord[0]][coord[1]] = (value)
+
+    '''for testing purpose'''
+    def test(self):
+        foods = [(2, 0), (4, 0), (5, 0), (9, 1), (4, 2), (7, 2), 
+                (0, 3), (7, 4), (0, 5), (5, 7), (9, 7), (9, 9)]
+        dangers = [(2, 4), (3, 4), (4, 4), (5, 4), (4, 5), (5, 5),
+                    (1, 6), (2, 6), (3, 6), (4, 6)]
+        head = (2, 5)
+        for food in foods:
+            self.set_cell(food, FOOD)
+        for danger in dangers:
+            self.set_cell(danger, DANGER)
+        self.set_cell(head, DANGER)
+
 
     '''set the grid back to the current stage after consider the next stage'''
     def set_back(self, prev_tail, next_head):
