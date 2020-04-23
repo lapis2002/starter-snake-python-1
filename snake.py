@@ -79,28 +79,28 @@ class Snake(Point):
         return [self.tail.x, self.tail.y]
 
     def eat_closest_food(self, gameboard, foods):
-        print("let's find some food!")
+        # print("let's find some food!")
         for food in foods:
             if len(gameboard.get_surroundings(food)) > 4:
                 foods.remove(food)
         start = gameboard.get_cell([self.head.x, self.head.y])
         path = gameboard.a_star(start, foods)
         if (path is not None):
-            print("yay! food! \m/")
+            # print("yay! food! \m/")
             self.next_move = path[0]
             return True
         else:
-            print("where is food? :(")
+            # print("where is food? :(")
             return False
 
     def random_good_move(self, gameboard, enemies, tails):
-        print("hmm.. where should I go?")
+        # print("hmm.. where should I go?")
         moves = self.get_good_moves(gameboard, enemies, tails)
         if moves:
             self.next_move = random.choice(moves)
-            print("I'm lost on the life path..")
+            # print("I'm lost on the life path..")
             return True
-        print("where should I go? :?")
+        # print("where should I go? :?")
         return False
 
     def random_move(self, gameboard):
@@ -128,10 +128,10 @@ class Snake(Point):
                 or self.is_threaten(gameboard,enemies, next_head))
 
     def is_trapped(self, gameboard, next_head ,tails):
-        print("check trap?")
+        # print("check trap?")
         start = gameboard.get_cell([next_head.x, next_head.y])
         path = gameboard.a_star(start, tails)
-        print("find any path?")
+        # print("find any path?")
         if (path is not None):
             return False
         else:
@@ -147,6 +147,7 @@ class Snake(Point):
 
     def count_next_reachable_area(self, gameboard):
         neighbors = gameboard.get_neighbors(self.head)
+        print(len(neighbors))
         if len(neighbors) == 0:
             print("death end :(")
             return ("left", 0)
@@ -175,7 +176,7 @@ class Snake(Point):
     def is_death_end(self, gameboard, next_head):
         next_area = gameboard.count_reachable_area(next_head)
         if next_area == 0:
-            print("Oh no :(")
+            # print("Oh no :(")
             return True
         return False
 
@@ -184,11 +185,11 @@ class Snake(Point):
             self.next_move = self.random_good_move(gameboard, enemies, tails)
             return True
              
-        print("I dont know where to go...")
+        # print("I dont know where to go...")
         path = gameboard.a_star(self.head, [self.tail])
         if (path is not None):
             self.next_move = path[0]
-            print("finding happiness ...")
+            # print("finding happiness ...")
             return True
         else:
             print("I cant find my tail! @@")
