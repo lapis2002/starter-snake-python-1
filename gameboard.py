@@ -44,8 +44,9 @@ class Point():
         return dx + dy
 
     def isGoal(self, goals):
-        for goal in goals:
-            if (self.v == goal.v):
+        coord_goals = [[goal.x, goal.y] for goal in goals]
+        for coord in coord_goals:
+            if (coord[0] == self.x) and (coord[1] == self.y):
                 return True
         return False
 
@@ -127,12 +128,14 @@ class Grid ():
                 surroundings.append(self.get_cell([point.x-1, point.y-1]))
             if point.y < self.height-1 and self.grid[point.x-1][point.y+1] != DANGER:
                 surroundings.append(self.get_cell([point.x-1, point.y+1]))
+
         if point.y > 0 and self.grid[point.x][point.y-1] != DANGER:
             surroundings.append(self.get_cell([point.x, point.y-1]))
             if point.x > 0 and self.grid[point.x-1][point.y-1] != DANGER:
                 surroundings.append(self.get_cell([point.x-1, point.y-1]))
             if point.x < self.width-1 and self.grid[point.x+11][point.y-1] != DANGER:
                 surroundings.append(self.get_cell([point.x+1, point.y-1]))
+
         if point.x < self.width-1 and self.grid[point.x+1][point.y] != DANGER:
             surroundings.append(self.get_cell([point.x+1, point.y]))
         if point.y < self.height-1 and self.grid[point.x][point.y+1] != DANGER:
@@ -146,6 +149,8 @@ class Grid ():
         adj.f = adj.g + adj.h
         self.set_cell([adj.x, adj.y], adj.f)
 
+    '''this function is finding the cell with specific value, 
+    follow_tail finds the cell with specific coord'''
     def a_star(self, start, goals):
         #return path if found, NoneType otherwise
         opened = []

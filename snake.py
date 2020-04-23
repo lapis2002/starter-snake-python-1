@@ -44,10 +44,6 @@ class Snake(Point):
                         if not(self.random_move(gameboard)):
                             print("I'm done")
         
-
-
-
-
     def get_good_moves(self, gameboard, tails):
         neighbors = gameboard.get_neighbors(self.head)
         for neighbor in neighbors:
