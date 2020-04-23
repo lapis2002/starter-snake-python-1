@@ -131,6 +131,7 @@ class Snake(Point):
         print("check trap?")
         start = gameboard.get_cell([next_head.x, next_head.y])
         path = gameboard.a_star(start, tails)
+        print("find any path?")
         if (path is not None):
             return False
         else:
