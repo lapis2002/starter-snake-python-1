@@ -154,7 +154,7 @@ class Snake(Point):
 
     def count_next_reachable_area(self, gameboard):
         neighbors = gameboard.get_neighbors(self.head)
-        print(len(neighbors))
+        print("how many ways I have", len(neighbors))
         if len(neighbors) == 0:
             print("death end :(")
             return ("left", 0)
