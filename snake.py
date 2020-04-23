@@ -21,6 +21,7 @@ class Snake(Point):
         return body, len(body)
 
     def next_movement(self, gameboard, enemies, foods):
+        print("let's find next move!")
         tails = [self.tail]
         for enemy in enemies:
             tails.append(enemy.tail)
