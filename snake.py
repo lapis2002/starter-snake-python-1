@@ -165,8 +165,9 @@ class Snake(Point):
             area[direction] = gameboard.count_reachable_area(neighbor)
             print("I got this much area", area[direction])
             gameboard.set_back(self.tail, self.head, neighbor)
-
         best_direction = max(area, key=lambda key: area[key])
+        print("I got this", best_direction)
+
         return (best_direction, area[best_direction])
 
     def is_reducing_reachable_area(self, gameboard, next_head):
