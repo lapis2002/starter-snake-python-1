@@ -31,16 +31,16 @@ class Snake(Point):
             print("let's check this")
             if not(self.eat_closest_food(gameboard, foods)):
                 print("how about this?")
-                if not(self.random_good_move(gameboard, tails)):
+                if not(self.random_good_move(gameboard, enemies, tails)):
                     print("and this?")
                     if not(self.get_not_bad_move(gameboard)):
-                        if not(self.follow_tail(gameboard, tails)):
+                        if not(self.follow_tail(gameboard, enemies, tails)):
                             if not(self.random_move(gameboard)):
                                 print("I'm done")
-        elif not(self.random_good_move(gameboard, tails)):
+        elif not(self.random_good_move(gameboard, enemies, tails)):
             print("and this?")
             if not(self.get_not_bad_move(gameboard)):
-                if not(self.follow_tail(gameboard, tails)):
+                if not(self.follow_tail(gameboard, enemies, tails)):
                     if not(self.random_move(gameboard)):
                         print("I'm done")
 
@@ -53,10 +53,10 @@ class Snake(Point):
         #     if not(self.random_move(gameboard)):
         #         print("I'm done")
 
-    def get_good_moves(self, gameboard, tails):
+    def get_good_moves(self, gameboard, enemies, tails):
         neighbors = gameboard.get_neighbors(self.head)
         for neighbor in neighbors:
-            if not(self.is_good_move(gameboard, neighbor, tails)):
+            if not(self.is_good_move(gameboard, neighbor, enemies, tails)):
                 neighbors.remove(neighbor)
         print("get_good_moves responded, does it work?")
         print("there are", len(neighbors), "neighbors left.")
@@ -93,9 +93,9 @@ class Snake(Point):
             print("where is food? :(")
             return False
 
-    def random_good_move(self, gameboard, tails):
+    def random_good_move(self, gameboard, enemies, tails):
         print("hmm.. where should I go?")
-        moves = self.get_good_moves(gameboard, tails)
+        moves = self.get_good_moves(gameboard, enemies, tails)
         if moves:
             self.next_move = random.choice(moves)
             print("I'm lost on the life path..")
@@ -121,11 +121,11 @@ class Snake(Point):
 
     # def is_bad_move(self, gameboard):
 
-    def is_good_move(self, gameboard, next_head, tails):
+    def is_good_move(self, gameboard, next_head, enemies, tails):
         print("is_good_move responded")
         return not(self.is_reducing_reachable_area(gameboard, next_head) 
-                or self.is_trapped(gameboard, next_head, tails)) 
-                # or self.is_threaten(gameboard, ))
+                # or self.is_trapped(gameboard, next_head, tails)) 
+                or self.is_threaten(gameboard,enemies, next_head))
 
     def is_trapped(self, gameboard, next_head ,tails):
         print("check trap?")
@@ -178,9 +178,9 @@ class Snake(Point):
             return True
         return False
 
-    def follow_tail(self, gameboard, tails):
+    def follow_tail(self, gameboard, enemies, tails):
         if self.tail.x == self.head.x and self.tail.y == self.head.y:
-            self.next_move = self.random_good_move(gameboard, tails)
+            self.next_move = self.random_good_move(gameboard, enemies, tails)
             return True
              
         print("I dont know where to go...")
