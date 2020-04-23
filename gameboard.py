@@ -133,7 +133,7 @@ class Grid ():
             surroundings.append(self.get_cell([point.x, point.y-1]))
             if point.x > 0 and self.grid[point.x-1][point.y-1] != DANGER:
                 surroundings.append(self.get_cell([point.x-1, point.y-1]))
-            if point.x < self.width-1 and self.grid[point.x+11][point.y-1] != DANGER:
+            if point.x < self.width-1 and self.grid[point.x+1][point.y-1] != DANGER:
                 surroundings.append(self.get_cell([point.x+1, point.y-1]))
 
         if point.x < self.width-1 and self.grid[point.x+1][point.y] != DANGER:
