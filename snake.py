@@ -173,7 +173,7 @@ class Snake(Point):
     def is_reducing_reachable_area(self, gameboard, next_head):
         #move to this point will reduce reachable area
         print("Do I move to less reachable area?")
-        current_area = gameboard.count_reachable_area(self.head)
+        direction, current_area = gameboard.count_reachable_area(self.head)
         print("hmm, let's check whether the function returns something", current_area)
         coord = self.move_toward(gameboard, next_head)
         
