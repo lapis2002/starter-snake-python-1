@@ -124,8 +124,8 @@ class Snake(Point):
     def is_good_move(self, gameboard, next_head, tails):
         print("is_good_move responded")
         return not(self.is_reducing_reachable_area(gameboard, next_head) 
-                or self.is_trapped(gameboard, next_head, tails) 
-                or self.is_threaten())
+                or self.is_trapped(gameboard, next_head, tails)) 
+                # or self.is_threaten(gameboard, ))
 
     def is_trapped(self, gameboard, next_head ,tails):
         start = gameboard.get_cell([next_head.x, next_head.y])
