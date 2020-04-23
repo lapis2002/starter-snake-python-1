@@ -51,7 +51,7 @@ class Snake(Point):
     def get_good_moves(self, gameboard, tails):
         neighbors = gameboard.get_neighbors(self.head)
         for neighbor in neighbors:
-            if self.is_bad_move(gameboard, neighbor, tails):
+            if not(self.is_good_move(gameboard, neighbor, tails)):
                 neighbors.remove(neighbor)
         moves = [self.head.get_direction(neighbor)
                  for neighbor in neighbors]
@@ -102,6 +102,8 @@ class Snake(Point):
         
         self.next_move = self.head.get_direction(result)
         return True
+
+    # def is_bad_move(self, gameboard):
 
     def is_good_move(self, gameboard, next_head, tails):
         return not(self.is_reducing_reachable_area(gameboard, next_head) 
