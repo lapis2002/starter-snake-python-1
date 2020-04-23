@@ -127,7 +127,7 @@ class Snake(Point):
                 or self.is_trapped(gameboard, next_head, tails) 
                 or self.is_threaten)
 
-    def is_trappped(self, gameboard, next_head ,tails):
+    def is_trapped(self, gameboard, next_head ,tails):
         start = gameboard.get_cell([next_head.x, next_head.y])
         path = gameboard.a_star(start, tails)
         if (path is not None):
