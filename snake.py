@@ -79,6 +79,7 @@ class Snake(Point):
             self.next_move = next_move
 
     def move_toward(self, gameboard, next_cell):
+        gameboard.set_cell([self.head.x, self.head.y], DANGER)
         gameboard.set_cell([next_cell.x, next_cell.y], DANGER)
         gameboard.set_cell([self.tail.x, self.tail.y], SAFE)
         return [self.tail.x, self.tail.y]
@@ -162,7 +163,7 @@ class Snake(Point):
             direction = self.head.get_direction(neighbor)
             coord = self.move_toward(gameboard, neighbor)
             area[direction] = gameboard.count_reachable_area(neighbor)
-            gameboard.set_back(self.tail, neighbor)
+            gameboard.set_back(self.tail, self.head, neighbor)
 
         best_direction = max(area, key=lambda key: area[key])
         return (best_direction, area[best_direction])

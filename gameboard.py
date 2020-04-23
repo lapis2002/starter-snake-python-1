@@ -1,6 +1,7 @@
 DANGER = 10
 SAFE = 0
 FOOD = 3
+SNAKE_HEAD = 1
 class Point():
     def __init__(self, coord, value):
         # self.reachable = reachable
@@ -98,7 +99,8 @@ class Grid ():
 
 
     '''set the grid back to the current stage after consider the next stage'''
-    def set_back(self, prev_tail, next_head):
+    def set_back(self, prev_tail, prev_head, next_head):
+        self.set_cell([prev_head.x, prev_head.y], SNAKE_HEAD)
         self.set_cell([prev_tail.x, prev_tail.y], DANGER)
         self.set_cell([next_head.x, next_head.y], SAFE)
 
