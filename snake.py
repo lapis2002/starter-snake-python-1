@@ -26,13 +26,27 @@ class Snake(Point):
         for enemy in enemies:
             tails.append(enemy.tail)
         self.next_move = "left"
+        print("let's check my health", self.health)
         if self.health < 75 and len(foods) > 0:
             print("let's check this")
             if not(self.eat_closest_food(gameboard, foods)):
                 print("how about this?")
                 if not(self.random_good_move(gameboard, tails)):
                     print("and this?")
-                    self.follow_tail(gameboard)
+                    if not(self.follow_tail(gameboard)):
+                        if not(self.random_move(gameboard)):
+                            print("I'm done")
+        else:
+            if not(self.random_good_move(gameboard, tails)):
+                print("and this?")
+                if not(self.follow_tail(gameboard)):
+                    if not(self.follow_tail(gameboard)):
+                        if not(self.random_move(gameboard)):
+                            print("I'm done")
+        
+
+
+
 
     def get_good_moves(self, gameboard, tails):
         neighbors = gameboard.get_neighbors(self.head)
@@ -64,15 +78,6 @@ class Snake(Point):
 
 
     def random_good_move(self, gameboard, tails):
-        # tail_coord = [self.tail.x, self.tail.y]
-        # if self.len > 2:
-        #     gameboard.set_cell(tail_coord, SAFE)
-        # possible_neighbors = gameboard.get_neighbors(self.head)
-        # is_valid = False
-        # while not(is_valid):
-        #     random_neighbor = random.choice(possible_neighbors)
-        #     result = gameboard.get_neighbors(random_neighbor)
-        #     is_valid = len(result) > 0
         print("hmm.. where should I go?")
         moves = self.get_good_moves(gameboard, tails)
         if moves:
@@ -81,6 +86,22 @@ class Snake(Point):
             return True
         print("where should I go? :?")
         return False
+
+    def random_move(self, gameboard):
+        tail_coord = [self.tail.x, self.tail.y]
+        if self.len > 2:
+            gameboard.set_cell(tail_coord, SAFE)
+        possible_neighbors = gameboard.get_neighbors(self.head)
+        if len(possible_neighbors) == 0:
+            return False
+        is_valid = False
+        while not(is_valid):
+            random_neighbor = random.choice(possible_neighbors)
+            result = gameboard.get_neighbors(random_neighbor)
+            is_valid = len(result) > 0
+        
+        self.next_move = self.head.get_direction(result)
+        return True
 
     def is_good_move(self, gameboard, next_head, tails):
         return not(self.is_reducing_reachable_area(gameboard, next_head) 
