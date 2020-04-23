@@ -163,6 +163,7 @@ class Snake(Point):
             direction = self.head.get_direction(neighbor)
             coord = self.move_toward(gameboard, neighbor)
             area[direction] = gameboard.count_reachable_area(neighbor)
+            print("I got this much area", area[direction])
             gameboard.set_back(self.tail, self.head, neighbor)
 
         best_direction = max(area, key=lambda key: area[key])
