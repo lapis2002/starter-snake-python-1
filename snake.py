@@ -3,6 +3,8 @@ import random
 
 DANGER = 10
 SAFE = 0
+FOOD = 3
+SNAKE_HEAD = 1
 class Snake(Point):
     def __init__(self, snake):
         self.id = snake["id"]
@@ -13,8 +15,10 @@ class Snake(Point):
         self.next_move = ""
 
     def set_body(self, snake):
-        body = []
-        for coord in snake["body"]:
+        head_coord = (snake["body"][0]["x"], snake["body"][0]["y"])
+        body = [Point([head_coord["x"], head_coord["y"]], SNAKE_HEAD)]
+
+        for coord in snake["body"][1:]:
             coord = Point([coord["x"], coord["y"]], DANGER)
             body.append(coord)
 
