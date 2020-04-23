@@ -24,18 +24,15 @@ def dist(p1, p2):
 
 def get_food(foods, gameboard, snake):
     start = gameboard.get_cell([snake.head.x, snake.head.y])
-    # foods = sorted(foods, key=lambda x: start.distance(x))
-    # end = gameboard.get_cell([foods[0].x, foods[0].y])
-    # print(type(gameboard.process(start, foods)))
-    path = gameboard.process(start, foods)
+    path = gameboard.a_star(start, foods)
     if (path  is not None):
-        # print(gameboard.process(start, foods))
+        # print(gameboard.a_star(start, foods))
         snake.next_move = path[0]
     else:
         # print("a")
         random_move(gameboard, snake)
         
-
+'''
 def next_move (foods, gameboard, opponents, snake):
     tails = []
     for enemy in opponents:
@@ -62,7 +59,7 @@ def find_food(foods, gameboard, snake):
 
 def follow_tail(gameboard, tails, snake):
     start = gameboard.get_cell([snake.head.x, snake.head.y])
-    snake.next_move = gameboard.process(start, tails)[0]
+    snake.next_move = gameboard.a_star(start, tails)[0]
 
 def random_move(gameboard, snake):
     tail_coord = [snake.tail.x, snake.tail.y]
@@ -87,11 +84,11 @@ def random_move(gameboard, snake):
     elif random_neighbor.y > snake.head.y:
         next_move = "down"
     snake.next_move = next_move
-
+'''
 def init(data):
+    print("turn", data["turn"])
     foods = []
     opponents = []
-    # data = cherrypy.request.json
     grid = Grid(data["board"]["height"], data["board"]["width"])
     my_snake = Snake(data["you"])
 
@@ -103,8 +100,6 @@ def init(data):
         food = Point([food["x"], food["y"]], FOOD)
         foods.append(food)
         grid.set_cell([food.x, food.y], FOOD)
-
-    # print(len(foods))
 
     for snake in data["board"]["snakes"]:
         snake = Snake(snake)
@@ -126,7 +121,6 @@ def init(data):
     #     print()
     # print(len(grid.grid))
     return my_snake, grid, foods, opponents
-
 
 class Battlesnake(object):
     @cherrypy.expose
@@ -211,18 +205,16 @@ class Battlesnake(object):
         #     get_food(foods, grid, my_snake)
         # else:
         #     follow_tail(grid, my_snake)
-        next_move(foods, grid, opponents, my_snake)
+
+        # next_move(foods, grid, opponents, my_snake)
+
+        my_snake.next_movement(grid, opponents, foods)
 
         move = my_snake.next_move
         
         print(f"MOVE: {move}")
         # print(data["you"])
         return {"move": move}
-
-    
-
-        
-
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
