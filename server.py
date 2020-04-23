@@ -2,7 +2,7 @@ import os
 import random
 from snake import Snake
 # from gameboard import GameBoard
-from A_star import *
+from gameboard import *
 import cherrypy
 
 """
