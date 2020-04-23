@@ -134,22 +134,30 @@ class Grid ():
 
     def get_surroundings(self, point):
         surroundings = []
+        #check West cell
         if point.x > 0 and self.grid[point.x-1][point.y] != DANGER:
             surroundings.append(self.get_cell([point.x-1, point.y]))
+        #check North West cell
             if point.y > 0 and self.grid[point.x-1][point.y-1] != DANGER:
                 surroundings.append(self.get_cell([point.x-1, point.y-1]))
+        #check South West cell
             if point.y < self.height-1 and self.grid[point.x-1][point.y+1] != DANGER:
                 surroundings.append(self.get_cell([point.x-1, point.y+1]))
 
+        #check North cell
         if point.y > 0 and self.grid[point.x][point.y-1] != DANGER:
             surroundings.append(self.get_cell([point.x, point.y-1]))
-            if point.x > 0 and self.grid[point.x-1][point.y-1] != DANGER:
-                surroundings.append(self.get_cell([point.x-1, point.y-1]))
-            if point.x < self.width-1 and self.grid[point.x+1][point.y-1] != DANGER:
-                surroundings.append(self.get_cell([point.x+1, point.y-1]))
-
+        
+        #check East cell
         if point.x < self.width-1 and self.grid[point.x+1][point.y] != DANGER:
             surroundings.append(self.get_cell([point.x+1, point.y]))
+        #check North East cell
+            if point.y > 0 and self.grid[point.x+1][point.y-1] != DANGER:
+                surroundings.append(self.get_cell([point.x-1, point.y-1]))
+        #check South East cell
+            if point.y < self.width-1 and self.grid[point.x+1][point.y+1] != DANGER:
+                surroundings.append(self.get_cell([point.x+1, point.y+1]))
+        #check South cell
         if point.y < self.height-1 and self.grid[point.x][point.y+1] != DANGER:
             surroundings.append(self.get_cell([point.x, point.y+1]))
         return surroundings

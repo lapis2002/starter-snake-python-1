@@ -117,7 +117,7 @@ class Snake(Point):
             result = gameboard.get_neighbors(random_neighbor)
             is_valid = len(result) > 0
         
-        self.next_move = self.head.get_direction(result)
+        self.next_move = self.head.get_direction(random_neighbor)
         return True
 
     # def is_bad_move(self, gameboard):
@@ -165,8 +165,9 @@ class Snake(Point):
     def is_reducing_reachable_area(self, gameboard, next_head):
         #move to this point will reduce reachable area
         print("Do I move to less reachable area?")
-        coord = self.move_toward(gameboard, next_head)
         current_area = gameboard.count_reachable_area(self.head)
+        coord = self.move_toward(gameboard, next_head)
+        
         next_area = gameboard.count_reachable_area(next_head)
         gameboard.set_back(self.tail, next_head)
         print("now I have", current_area, "then I may have", next_area)
