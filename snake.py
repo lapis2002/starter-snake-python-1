@@ -78,6 +78,7 @@ class Snake(Point):
             return False
         else:
             self.next_move = next_move
+            return True
 
     def move_toward(self, gameboard, next_cell):
         gameboard.set_cell([self.head.x, self.head.y], DANGER)
