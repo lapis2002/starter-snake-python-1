@@ -9,12 +9,12 @@ for y in range(len(grid.grid)):
             print("* ", end="")
         elif grid.grid[x][y] == 3:
             print("o ", end="")
-        elif x == 2 and y == 5:
+        elif x == 5 and y == 0:
             print("@ ", end="")
         else:
             print(". ", end="")
     print()
-cell = grid.get_cell((2, 5))
+cell = grid.get_cell((5, 0))
 
 print(grid.count_reachable_area(cell))
 

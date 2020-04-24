@@ -24,6 +24,7 @@ class Snake(Point):
 
         return body, len(body)
 
+    '''snake seems to move toward right side of the board, and toward the wall'''
     def next_movement(self, gameboard, enemies, foods):
         # print("let's find next move!")
         tails = [self.tail]
@@ -73,7 +74,7 @@ class Snake(Point):
     '''next best move in case no move leads to better reachable area'''
     def get_not_bad_move (self, gameboard):
         next_move, next_area = self.count_next_reachable_area(gameboard)
-        # print("get something returned")
+        print("get something returned")
         if next_area == 0:
             return False
         else:
@@ -165,10 +166,10 @@ class Snake(Point):
             direction = self.head.get_direction(neighbor)
             coord = self.move_toward(gameboard, neighbor)
             area[direction] = gameboard.count_reachable_area(neighbor)
-            # print("I got this much area", area[direction])
+            print("I got this much area", area[direction])
             gameboard.set_back(self.tail, self.head, neighbor)
         best_direction = max(area, key=lambda key: area[key])
-        # print("I got this", best_direction, "and", area[best_direction])
+        print("I got this", best_direction, "and", area[best_direction])
 
         return (best_direction, area[best_direction])
 
@@ -181,7 +182,7 @@ class Snake(Point):
         
         next_area = gameboard.count_reachable_area(next_head)
         gameboard.set_back(self.tail, self.head, next_head)
-        # print("now I have", current_area, "then I may have", next_area)
+        print("now I have", current_area, "then I may have", next_area)
         if current_area > next_area:
             return True
         return False        
