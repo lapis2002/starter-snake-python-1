@@ -90,7 +90,7 @@ class Snake(Point):
                                        for neighbor in neighbors]
                 possible_best_moves = []
                 if len(neighbors) == 0:
-                    if not(self.is_possible_to_reach_tail(gameboard, enemy_tails)):
+                    if (self.is_trapped(gameboard, enemy_tails)):
                         pass
                 else:
                     for neighbor in neighbors:
