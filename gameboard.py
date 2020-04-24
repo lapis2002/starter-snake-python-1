@@ -126,10 +126,10 @@ class Grid ():
         neighbors = []
         if point.x > 0 and self.grid[point.x-1][point.y] != DANGER:
             neighbors.append(self.get_cell([point.x-1, point.y]))
-        if point.y > 0 and self.grid[point.x][point.y-1] != DANGER:
-            neighbors.append(self.get_cell([point.x, point.y-1]))
         if point.x < self.width-1 and self.grid[point.x+1][point.y] != DANGER:
             neighbors.append(self.get_cell([point.x+1, point.y]))
+        if point.y > 0 and self.grid[point.x][point.y-1] != DANGER:
+            neighbors.append(self.get_cell([point.x, point.y-1]))
         if point.y < self.height-1 and self.grid[point.x][point.y+1] != DANGER:
             neighbors.append(self.get_cell([point.x, point.y+1]))
         return neighbors
@@ -208,7 +208,7 @@ class Grid ():
         neighbors = self.get_neighbors(cell)
         reachable_cells = 1
         #add this to test
-        # reachable_cells += len(neighbors)
+        reachable_cells += len(neighbors)
         for neighbor in neighbors:
             reachable_cells += self.flood_fill(neighbor, visited)
         return reachable_cells
