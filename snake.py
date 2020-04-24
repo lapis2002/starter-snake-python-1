@@ -299,7 +299,12 @@ class Snake(Point):
             # print("finding happiness ...")
             return True
         else:
+            path = gameboard.a_star(self.head, tails)
             print("I cant find my tail! @@")
+            if (path is not None):
+                self.next_move = path[0]
+                # print("finding happiness ...")
+                return True
             return False
 
     
