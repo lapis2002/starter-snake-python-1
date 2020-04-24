@@ -68,7 +68,7 @@ class Snake(Point):
         # print("there are", len(neighbors), "neighbors left.")
         moves = [self.head.get_direction(neighbor)
                  for neighbor in neighbors]
-        # print("let's see what moves we got", moves)
+        print("let's see what moves we got", moves)
         return moves
 
     '''next best move in case no move leads to better reachable area'''
@@ -134,7 +134,7 @@ class Snake(Point):
     def is_good_move(self, gameboard, next_head, enemies, tails):
         # print("is_good_move responded")
         return not(self.is_reducing_reachable_area(gameboard, next_head) 
-                # or self.is_trapped(gameboard, next_head, tails)) 
+                or self.is_trapped(gameboard, next_head, tails)
                 or self.is_threaten(gameboard,enemies, next_head))
 
     def is_trapped(self, gameboard, next_head ,tails):
