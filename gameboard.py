@@ -207,6 +207,8 @@ class Grid ():
         visited.append(cell)
         neighbors = self.get_neighbors(cell)
         reachable_cells = 1
+        #add this to test
+        reachable_cells += len(neighbors)
         for neighbor in neighbors:
             reachable_cells += self.flood_fill(neighbor, visited)
         return reachable_cells
