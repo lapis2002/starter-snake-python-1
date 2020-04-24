@@ -73,6 +73,7 @@ class Snake(Point):
     '''next best move in case no move leads to better reachable area'''
     def get_not_bad_move (self, gameboard):
         next_move, next_area = self.count_next_reachable_area(gameboard)
+        print("get something returned")
         if next_area == 0:
             return False
         else:
