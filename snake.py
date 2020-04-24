@@ -144,8 +144,7 @@ class Snake(Point):
         # print("find any path?")
         if (path is not None):
             return False
-        else:
-            return True
+        return True
         
     def is_threaten(self, gameboard, enemies, next_head):
         enemy_heads = [enemy.head for enemy in enemies]
