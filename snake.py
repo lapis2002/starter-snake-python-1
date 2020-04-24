@@ -190,7 +190,7 @@ class Snake(Point):
         for neighbor in neighbors:
             direction = self.head.get_direction(neighbor)
             coord = self.move_toward(gameboard, neighbor)
-            area[direction] = gameboard.count_reachable_area(neighbor, MOVES)
+            area[direction] = gameboard.count_reachable_area(neighbor)
             print("I got this much area", area[direction])
             gameboard.set_back(self.tail, self.head, neighbor)
         best_direction = max(area, key=lambda key: area[key])
@@ -201,11 +201,11 @@ class Snake(Point):
     def is_reducing_reachable_area(self, gameboard, next_head):
         #move to this point will reduce reachable area
         # print("Do I move to less reachable area?")
-        current_area = gameboard.count_reachable_area(self.head, MOVES)
+        current_area = gameboard.count_reachable_area(self.head)
         # print("hmm, let's check whether the function returns something", current_area)
         coord = self.move_toward(gameboard, next_head)
         
-        next_area = gameboard.count_reachable_area(next_head, MOVES)
+        next_area = gameboard.count_reachable_area(next_head)
         gameboard.set_back(self.tail, self.head, next_head)
         print("now I have", current_area, "then I may have", next_area)
         if current_area > next_area:
@@ -213,7 +213,7 @@ class Snake(Point):
         return False        
 
     def is_death_end(self, gameboard, next_head):
-        next_area = gameboard.count_reachable_area(next_head, MOVES)
+        next_area = gameboard.count_reachable_area(next_head)
         if next_area == 0:
             # print("Oh no :(")
             return True
