@@ -180,6 +180,15 @@ class Grid ():
         adj.f = adj.g + adj.h
         self.set_cell([adj.x, adj.y], adj.f)
 
+    def get_available_space(self):
+        avai_space = 0 
+        for y in range(self.height):
+            for x in range(self.width):
+                if self.grid[x][y] == SAFE or self.grid[x][y] == FOOD:
+                    avai_space += 1
+        return avai_space
+
+
     '''this function is finding the cell with specific value, 
     follow_tail finds the cell with specific coord'''
     def a_star(self, start, goals):

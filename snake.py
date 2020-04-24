@@ -34,29 +34,29 @@ class Snake(Point):
         return body, len(body)
 
     '''snake seems to move toward right side of the board, and toward the wall'''
-    def next_movement(self, gameboard, enemies, foods):
-        # print("let's find next move!")
-        tails = [self.tail]
-        for enemy in enemies:
-            tails.append(enemy.tail)
-        self.next_move = "left"
-        print("let's check my health", self.health)
-        if self.health < 75 and len(foods) > 0:
-            # print("let's check this")
-            if not(self.eat_closest_food(gameboard, foods)):
-                # print("how about this?")
-                if not(self.random_good_move(gameboard, enemies, tails)):
-                    # print("and this?")
-                    if not(self.get_not_bad_move(gameboard)):
-                        if not(self.follow_tail(gameboard, enemies, tails)):
-                            if not(self.random_move(gameboard)):
-                                print("I'm done")
-        elif not(self.random_good_move(gameboard, enemies, tails)):
-            # print("and this?")
-            if not(self.get_not_bad_move(gameboard)):
-                if not(self.follow_tail(gameboard, enemies, tails)):
-                    if not(self.random_move(gameboard)):
-                        print("I'm done")
+    # def next_movement(self, gameboard, enemies, foods):
+    #     # print("let's find next move!")
+    #     tails = [self.tail]
+    #     for enemy in enemies:
+    #         tails.append(enemy.tail)
+    #     self.next_move = "left"
+    #     print("let's check my health", self.health)
+    #     if self.health < 75 and len(foods) > 0:
+    #         # print("let's check this")
+    #         if not(self.eat_closest_food(gameboard, foods)):
+    #             # print("how about this?")
+    #             if not(self.random_good_move(gameboard, enemies, tails)):
+    #                 # print("and this?")
+    #                 if not(self.get_not_bad_move(gameboard)):
+    #                     if not(self.follow_tail(gameboard, enemies, tails)):
+    #                         if not(self.random_move(gameboard)):
+    #                             print("I'm done")
+    #     elif not(self.random_good_move(gameboard, enemies, tails)):
+    #         # print("and this?")
+    #         if not(self.get_not_bad_move(gameboard)):
+    #             if not(self.follow_tail(gameboard, enemies, tails)):
+    #                 if not(self.random_move(gameboard)):
+    #                     print("I'm done")
 
         # elif not(self.get_not_bad_move(gameboard)):
         #     if not(self.follow_tail(gameboard, tails)):
@@ -67,18 +67,86 @@ class Snake(Point):
         #     if not(self.random_move(gameboard)):
         #         print("I'm done")
 
-    def get_good_moves(self, gameboard, enemies, tails):
+    def next_movement(self, gameboard, enemies, foods):
+        enemy_heads = [enemy.head for enemy in enemies]
+        enemy_tails = [enemy.tail for enemy in enemies]
+        self.next_move = "left"
+
+        if self.health < 70 and len(foods) > 0:
+            if not(self.eat_closest_food(gameboard, foods)):
+                pass
+
+        else:
+            best_dir, best_area = self.count_next_reachable_area(gameboard)
+            current_area = gameboard.count_reachable_area(self.head)
+            if best_area > current_area:
+                self.next_move = best_dir
+            else:
+                possible_good_moves = []
+                neighbors = gameboard.get_neighbors(self.head)
+                for neighbor in neighbors:
+                    if (self.is_trapped(gameboard, neighbor, enemy_tails)):
+                        neighbors.remove(neighbor)
+
+                possible_good_moves = [self.head.get_direction(neighbor)
+                                       for neighbor in neighbors]
+                possible_best_moves = []
+                if len(neighbors) == 0:
+                    if not(self.is_possible_to_reach_tail(gameboard, enemy_tails)):
+                        pass
+                else:
+                    for neighbor in neighbors:
+                        if self.is_threaten(gameboard,  enemies, neighbor):
+                            pass
+                        else:
+                            # enemy = None
+                            # self.attack_head(gameboard, enemy)
+                            possible_best_moves.append(
+                                self.head.get_direction(neighbor))
+                    
+                    if (possible_best_moves):
+                        self.next_move = random.choice(possible_best_moves)
+                    else:
+                        if not(self.follow_tail()):
+                            if not(self.random_move(gameboard)):
+                                print("I'm done")
+
+
+
+                # if (len(possible_good_moves) == 0 and 
+                #     not(self.is_possible_to_reach_tail(gameboard, enemy_tails))):
+                #     pass
+
+
+
+
+                    
+                
+    def get_good_moves(self, gameboard, tails):
         neighbors = gameboard.get_neighbors(self.head)
         for neighbor in neighbors:
             print("let's check this move", self.head.get_direction(neighbor))
-            if not(self.is_good_move(gameboard, neighbor, enemies, tails)):
+            if (self.is_trapped(gameboard, neighbor, tails)):
                 neighbors.remove(neighbor)
         # print("get_good_moves responded, does it work?")
         # print("there are", len(neighbors), "neighbors left.")
         moves = [self.head.get_direction(neighbor)
                  for neighbor in neighbors]
         print("let's see what moves we got", moves)
-        return moves
+        return moves        
+
+    # def get_good_moves(self, gameboard, enemies, tails):
+    #     neighbors = gameboard.get_neighbors(self.head)
+    #     for neighbor in neighbors:
+    #         print("let's check this move", self.head.get_direction(neighbor))
+    #         if not(self.is_good_move(gameboard, neighbor, enemies, tails)):
+    #             neighbors.remove(neighbor)
+    #     # print("get_good_moves responded, does it work?")
+    #     # print("there are", len(neighbors), "neighbors left.")
+    #     moves = [self.head.get_direction(neighbor)
+    #              for neighbor in neighbors]
+    #     print("let's see what moves we got", moves)
+    #     return moves
 
     '''next best move in case no move leads to better reachable area'''
     def get_not_bad_move (self, gameboard):
@@ -165,7 +233,7 @@ class Snake(Point):
         enemy_heads = [enemy.head for enemy in enemies]
         for enemy_head in enemy_heads:
             if next_head in gameboard.get_neighbors(enemy_head):
-                if self.len <= enemies[enemy_heads.index(next_head)]:
+                if self.len <= enemies[enemy_heads.index(next_head)].len:
                     print("be careful")
                     return True
         return False
