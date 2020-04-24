@@ -125,14 +125,14 @@ class Snake(Point):
     def get_good_moves(self, gameboard, tails):
         neighbors = gameboard.get_neighbors(self.head)
         for neighbor in neighbors:
-            print("let's check this move", self.head.get_direction(neighbor))
+            # print("let's check this move", self.head.get_direction(neighbor))
             if (self.is_trapped(gameboard, neighbor, tails)):
                 neighbors.remove(neighbor)
         # print("get_good_moves responded, does it work?")
         # print("there are", len(neighbors), "neighbors left.")
         moves = [self.head.get_direction(neighbor)
                  for neighbor in neighbors]
-        print("let's see what moves we got", moves)
+        # print("let's see what moves we got", moves)
         return moves        
 
     # def get_good_moves(self, gameboard, enemies, tails):
@@ -151,7 +151,7 @@ class Snake(Point):
     '''next best move in case no move leads to better reachable area'''
     def get_not_bad_move (self, gameboard):
         next_move, next_area = self.count_next_reachable_area(gameboard)
-        print("get something returned")
+        # print("get something returned")
         if next_area == 0:
             return False
         else:
@@ -215,18 +215,18 @@ class Snake(Point):
                 or self.is_threaten(gameboard,enemies, next_head))
 
     def is_trapped(self, gameboard, next_head ,tails):
-        print("check trap?")
-        print("we got", len(tails))
+        # print("check trap?")
+        # print("we got", len(tails))
         start = gameboard.get_cell([next_head.x, next_head.y])
         coord = self.move_toward(gameboard, next_head)
         path = gameboard.a_star(start, tails)
         gameboard.set_back(self.tail, self.head, next_head)
 
-        print("find any path?")
+        # print("find any path?")
         if (path is not None):
-            print("path found")
+            # print("path found")
             return False
-        print("no path found")
+        # print("no path found")
         return True
         
     def is_threaten(self, gameboard, enemies, next_head):
@@ -234,7 +234,7 @@ class Snake(Point):
         for enemy_head in enemy_heads:
             if next_head in gameboard.get_neighbors(enemy_head):
                 if self.len <= enemies[enemy_heads.index(next_head)].len:
-                    print("be careful")
+                    # print("be careful")
                     return True
         return False
 
@@ -252,17 +252,17 @@ class Snake(Point):
         neighbors = gameboard.get_neighbors(self.head)
         # print("how many ways I have", len(neighbors))
         if len(neighbors) == 0:
-            print("death end :(")
+            # print("death end :(")
             return ("left", 0)
         area = {}
         for neighbor in neighbors:
             direction = self.head.get_direction(neighbor)
             coord = self.move_toward(gameboard, neighbor)
             area[direction] = gameboard.count_reachable_area(neighbor)
-            print("I got this much area", area[direction])
+            # print("I got this much area", area[direction])
             gameboard.set_back(self.tail, self.head, neighbor)
         best_direction = max(area, key=lambda key: area[key])
-        print("I got this", best_direction, "and", area[best_direction])
+        # print("I got this", best_direction, "and", area[best_direction])
 
         return (best_direction, area[best_direction])
 
@@ -275,7 +275,7 @@ class Snake(Point):
         
         next_area = gameboard.count_reachable_area(next_head)
         gameboard.set_back(self.tail, self.head, next_head)
-        print("now I have", current_area, "then I may have", next_area)
+        # print("now I have", current_area, "then I may have", next_area)
         if current_area > next_area:
             return True
         return False        
@@ -300,7 +300,7 @@ class Snake(Point):
             return True
         else:
             path = gameboard.a_star(self.head, tails)
-            print("I cant find my tail! @@")
+            # print("I cant find my tail! @@")
             if (path is not None):
                 self.next_move = path[0]
                 # print("finding happiness ...")
