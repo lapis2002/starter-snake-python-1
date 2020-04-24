@@ -23,7 +23,7 @@ class Snake(Point):
             coord = Point([coord["x"], coord["y"]], DANGER)
             body.append(coord)
 
-        tail.coord = (snake["body"][0]["x"], snake["body"][0]["y"])
+        tail_coord = (snake["body"][0]["x"], snake["body"][0]["y"])
         body.append(Point([tail_coord[0], tail_coord[1]], SNAKE_TAIL))
 
         return body, len(body)
