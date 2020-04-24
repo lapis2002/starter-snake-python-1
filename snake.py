@@ -161,9 +161,20 @@ class Snake(Point):
         for enemy_head in enemy_heads:
             if next_head in gameboard.get_neighbors(enemy_head):
                 if self.len <= enemies[enemy_heads.index(next_head)]:
+                    print("be careful")
                     return True
         return False
 
+    # enemies: list of snake
+
+    # def is_on_enemy_way(self, enemies, snake):
+    #     head = self.get_cell([snake.head.x, snake.head.y])
+    #     for enemy in enemies:
+    #         enemy_head = self.get_cell([enemy.head.x, enemy.head.y])
+    #         if snake.len < enemy.len:
+    #             if head in self.get_neighbors(enemy_head):
+    #                 return True
+    #     return False
     def count_next_reachable_area(self, gameboard):
         neighbors = gameboard.get_neighbors(self.head)
         # print("how many ways I have", len(neighbors))
