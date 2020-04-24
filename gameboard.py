@@ -88,14 +88,19 @@ class Grid ():
     def test(self):
         foods = [(2, 0), (4, 0), (5, 0), (9, 1), (4, 2), (7, 2), 
                 (0, 3), (7, 4), (0, 5), (5, 7), (9, 7), (9, 9)]
-        dangers = [(3, 4), (4, 4), (5, 4), (5, 3), (5, 2), (5, 1), (4, 5), (5, 5),
-                    (1, 6), (2, 6), (3, 6), (4, 6), (2, 5)]
+        dangers = [(3, 4), (4, 4), (5, 4), (5, 3), (5, 2), (5, 1),
+                    (2, 4), (4, 5), (5, 5), (2, 6), (3, 6), (2, 5)]
         head = (5, 0)
         for food in foods:
             self.set_cell(food, FOOD)
         for danger in dangers:
             self.set_cell(danger, DANGER)
         self.set_cell(head, SNAKE_HEAD)
+        tails = [(8, 8), (4, 6)]
+        for tail in tails:
+            self.set_cell(tail, 5)
+
+
 
 
     '''set the grid back to the current stage after consider the next stage'''
@@ -208,7 +213,7 @@ class Grid ():
         neighbors = self.get_neighbors(cell)
         reachable_cells = 1
         #add this to test
-        reachable_cells += len(neighbors)
+        # reachable_cells += len(neighbors)
         for neighbor in neighbors:
             reachable_cells += self.flood_fill(neighbor, visited)
         return reachable_cells

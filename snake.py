@@ -4,7 +4,8 @@ import random
 DANGER = 10
 SAFE = 0
 FOOD = 3
-SNAKE_HEAD = 1
+SNAKE_HEAD = 5
+SNAKE_TAIL = 5
 class Snake(Point):
     def __init__(self, snake):
         self.id = snake["id"]
@@ -18,9 +19,12 @@ class Snake(Point):
         head_coord = (snake["body"][0]["x"], snake["body"][0]["y"])
         body = [Point([head_coord[0], head_coord[1]], SNAKE_HEAD)]
 
-        for coord in snake["body"][1:]:
+        for coord in snake["body"][1:-1]:
             coord = Point([coord["x"], coord["y"]], DANGER)
             body.append(coord)
+
+        tail.coord = (snake["body"][0]["x"], snake["body"][0]["y"])
+        body.append(Point([tail_coord[0], tail_coord[1]], SNAKE_TAIL))
 
         return body, len(body)
 
@@ -141,7 +145,10 @@ class Snake(Point):
         print("check trap?")
         print("we got", len(tails))
         start = gameboard.get_cell([next_head.x, next_head.y])
+        coord = self.move_toward(gameboard, next_head)
         path = gameboard.a_star(start, tails)
+        gameboard.set_back(self.tail, self.head, next_head)
+
         print("find any path?")
         if (path is not None):
             print("path found")
