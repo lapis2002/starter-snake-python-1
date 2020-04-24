@@ -142,7 +142,7 @@ class Snake(Point):
         print("we got", len(tails))
         start = gameboard.get_cell([next_head.x, next_head.y])
         path = gameboard.a_star(start, tails)
-        # print("find any path?")
+        print("find any path?")
         if (path is not None):
             print("path found")
             return False
