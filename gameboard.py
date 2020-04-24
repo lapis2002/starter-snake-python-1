@@ -1,7 +1,11 @@
 DANGER = 10
 SAFE = 0
 FOOD = 3
-SNAKE_HEAD = 1
+SNAKE_HEAD = 5
+SNAKE_TAIL = 5
+#for flood_fill
+MOVES = 5
+
 class Point():
     def __init__(self, coord, value):
         # self.reachable = reachable
@@ -205,9 +209,26 @@ class Grid ():
                         opened.append(neighbor)
 
     #cell is a Point
-    def flood_fill(self, cell, visited):
+    # def flood_fill(self, cell, visited):
+    #     # coord = [cell.x, cell.y]
+    #     if cell in visited or cell.v == DANGER:
+    #         return 0
+    #     visited.append(cell)
+    #     neighbors = self.get_neighbors(cell)
+    #     reachable_cells = 1
+    #     #add this to test
+    #     # reachable_cells += len(neighbors)
+    #     for neighbor in neighbors:
+    #         reachable_cells += self.flood_fill(neighbor, visited)
+    #     return reachable_cells
+
+    # def count_reachable_area(self, cell):
+    #     visited = []
+    #     return self.flood_fill(cell, visited)
+
+    def flood_fill(self, cell, visited, moves=MOVES):
         # coord = [cell.x, cell.y]
-        if cell in visited or cell.v == DANGER:
+        if cell in visited or cell.v == DANGER or moves == 0:
             return 0
         visited.append(cell)
         neighbors = self.get_neighbors(cell)
@@ -215,12 +236,13 @@ class Grid ():
         #add this to test
         # reachable_cells += len(neighbors)
         for neighbor in neighbors:
-            reachable_cells += self.flood_fill(neighbor, visited)
+            reachable_cells += self.flood_fill(neighbor, visited, moves-1)
         return reachable_cells
 
-    def count_reachable_area(self, cell):
+    def count_reachable_area(self, cell, moves=MOVES):
         visited = []
-        return self.flood_fill(cell, visited)
+        return self.flood_fill(cell, visited, moves)
+
 
     #enemies: list of snake
     def is_on_enemy_way(self, enemies, snake):

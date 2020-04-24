@@ -23,9 +23,9 @@ print(grid.count_reachable_area(cell))
 print(grid.a_star(cell, [tail]))
 
 
-# print("check neighbor")
-# neighbors = grid.get_neighbors(cell)
-# grid.set_cell((1, 6), 0)
+print("check neighbor")
+neighbors = grid.get_neighbors(cell)
+grid.set_cell((1, 6), 0)
 # for y in range(len(grid.grid)):
 #     for x in range(len(grid.grid[0])):
 #         if grid.grid[x][y] == 10:
@@ -37,7 +37,7 @@ print(grid.a_star(cell, [tail]))
 #         else:
 #             print(". ", end="")
 #     print()
-# for neighbor in neighbors:
-#     print("direction:", cell.get_direction(neighbor))
-#     print(grid.count_reachable_area(neighbor))
+for neighbor in neighbors:
+    print("direction:", cell.get_direction(neighbor))
+    print(grid.count_reachable_area(neighbor))
 
