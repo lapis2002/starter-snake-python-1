@@ -139,11 +139,14 @@ class Snake(Point):
 
     def is_trapped(self, gameboard, next_head ,tails):
         print("check trap?")
+        print("we got", len(tails))
         start = gameboard.get_cell([next_head.x, next_head.y])
         path = gameboard.a_star(start, tails)
         # print("find any path?")
         if (path is not None):
+            print("path found")
             return False
+        print("no path found")
         return True
         
     def is_threaten(self, gameboard, enemies, next_head):
