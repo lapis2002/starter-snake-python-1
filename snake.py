@@ -75,7 +75,6 @@ class Snake(Point):
         if self.health < 70 and len(foods) > 0:
             if not(self.eat_closest_food(gameboard, foods)):
                 pass
-
         else:
             best_dir, best_area = self.count_next_reachable_area(gameboard)
             current_area = gameboard.count_reachable_area(self.head)
@@ -87,7 +86,6 @@ class Snake(Point):
                 for neighbor in neighbors:
                     if (self.is_trapped(gameboard, neighbor, enemy_tails)):
                         neighbors.remove(neighbor)
-
                 possible_good_moves = [self.head.get_direction(neighbor)
                                        for neighbor in neighbors]
                 possible_best_moves = []
@@ -108,8 +106,12 @@ class Snake(Point):
                         self.next_move = random.choice(possible_best_moves)
                     else:
                         if not(self.follow_tail()):
-                            if not(self.random_move(gameboard)):
-                                print("I'm done")
+                            if (possible_good_moves):
+                                self.next_move = random.choice(
+                                    possible_good_moves)
+                            else:
+                                if not(self.random_move(gameboard)):
+                                    print("I'm done")
 
 
 
