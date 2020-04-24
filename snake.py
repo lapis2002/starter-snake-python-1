@@ -25,24 +25,24 @@ class Snake(Point):
         return body, len(body)
 
     def next_movement(self, gameboard, enemies, foods):
-        print("let's find next move!")
+        # print("let's find next move!")
         tails = [self.tail]
         for enemy in enemies:
             tails.append(enemy.tail)
         self.next_move = "left"
         print("let's check my health", self.health)
         if self.health < 75 and len(foods) > 0:
-            print("let's check this")
+            # print("let's check this")
             if not(self.eat_closest_food(gameboard, foods)):
-                print("how about this?")
+                # print("how about this?")
                 if not(self.random_good_move(gameboard, enemies, tails)):
-                    print("and this?")
+                    # print("and this?")
                     if not(self.get_not_bad_move(gameboard)):
                         if not(self.follow_tail(gameboard, enemies, tails)):
                             if not(self.random_move(gameboard)):
                                 print("I'm done")
         elif not(self.random_good_move(gameboard, enemies, tails)):
-            print("and this?")
+            # print("and this?")
             if not(self.get_not_bad_move(gameboard)):
                 if not(self.follow_tail(gameboard, enemies, tails)):
                     if not(self.random_move(gameboard)):
@@ -60,20 +60,20 @@ class Snake(Point):
     def get_good_moves(self, gameboard, enemies, tails):
         neighbors = gameboard.get_neighbors(self.head)
         for neighbor in neighbors:
-            print("let's check this move", self.head.get_direction(neighbor))
+            # print("let's check this move", self.head.get_direction(neighbor))
             if not(self.is_good_move(gameboard, neighbor, enemies, tails)):
                 neighbors.remove(neighbor)
         # print("get_good_moves responded, does it work?")
-        print("there are", len(neighbors), "neighbors left.")
+        # print("there are", len(neighbors), "neighbors left.")
         moves = [self.head.get_direction(neighbor)
                  for neighbor in neighbors]
-        print("let's see what moves we got", moves)
+        # print("let's see what moves we got", moves)
         return moves
 
     '''next best move in case no move leads to better reachable area'''
     def get_not_bad_move (self, gameboard):
         next_move, next_area = self.count_next_reachable_area(gameboard)
-        print("get something returned")
+        # print("get something returned")
         if next_area == 0:
             return False
         else:
@@ -156,7 +156,7 @@ class Snake(Point):
 
     def count_next_reachable_area(self, gameboard):
         neighbors = gameboard.get_neighbors(self.head)
-        print("how many ways I have", len(neighbors))
+        # print("how many ways I have", len(neighbors))
         if len(neighbors) == 0:
             print("death end :(")
             return ("left", 0)
@@ -165,23 +165,23 @@ class Snake(Point):
             direction = self.head.get_direction(neighbor)
             coord = self.move_toward(gameboard, neighbor)
             area[direction] = gameboard.count_reachable_area(neighbor)
-            print("I got this much area", area[direction])
+            # print("I got this much area", area[direction])
             gameboard.set_back(self.tail, self.head, neighbor)
         best_direction = max(area, key=lambda key: area[key])
-        print("I got this", best_direction, "and", area[best_direction])
+        # print("I got this", best_direction, "and", area[best_direction])
 
         return (best_direction, area[best_direction])
 
     def is_reducing_reachable_area(self, gameboard, next_head):
         #move to this point will reduce reachable area
-        print("Do I move to less reachable area?")
+        # print("Do I move to less reachable area?")
         current_area = gameboard.count_reachable_area(self.head)
-        print("hmm, let's check whether the function returns something", current_area)
+        # print("hmm, let's check whether the function returns something", current_area)
         coord = self.move_toward(gameboard, next_head)
         
         next_area = gameboard.count_reachable_area(next_head)
         gameboard.set_back(self.tail, self.head, next_head)
-        print("now I have", current_area, "then I may have", next_area)
+        # print("now I have", current_area, "then I may have", next_area)
         if current_area > next_area:
             return True
         return False        
