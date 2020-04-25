@@ -17,7 +17,7 @@ DANGER = 10
 
 
 def init(data):
-    print("TURN", data["turn"])
+    # print("TURN", data["turn"])
     foods = []
     opponents = []
     grid = Grid(data["board"]["height"], data["board"]["width"])
