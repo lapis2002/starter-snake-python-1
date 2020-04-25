@@ -72,7 +72,7 @@ class Snake(Point):
         enemy_tails = [enemy.tail for enemy in enemies]
         self.next_move = "left"
 
-        if self.health < 70 and len(foods) > 0:
+        if self.health < 80 and len(foods) > 0:
             if not(self.eat_closest_food(gameboard, foods)):
                 pass
         else:
