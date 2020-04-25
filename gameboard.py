@@ -77,8 +77,6 @@ class Grid ():
         self.cells = []
 
     def set_cell(self, coord, value):
-        # reachable = point.reachable
-        # value = point.v
         self.grid[coord[0]][coord[1]] = (value)
         self.cells[coord[0]*self.height + coord[1]] = Point([coord[0], coord[1]], value) 
 
@@ -104,9 +102,6 @@ class Grid ():
         for tail in tails:
             self.set_cell(tail, 5)
 
-
-
-
     '''set the grid back to the current stage after consider the next stage'''
     def set_back(self, prev_tail, prev_head, next_head):
         self.set_cell([prev_head.x, prev_head.y], SNAKE_HEAD)
@@ -116,7 +111,6 @@ class Grid ():
     def set_grid(self):
         for x in range(self.width):
             for y in range(self.height):
-                # value = self.grid[x][y]
                 self.cells.append(Point([x, y], SAFE))
 
     def get_cell(self, coord):
@@ -188,9 +182,7 @@ class Grid ():
                     avai_space += 1
         return avai_space
 
-
-    '''this function is finding the cell with specific value, 
-    follow_tail finds the cell with specific coord'''
+    '''this function is finding the cell with specific value '''
     def a_star(self, start, goals):
         #return path if found, NoneType otherwise
         opened = []
@@ -209,8 +201,6 @@ class Grid ():
             for neighbor in neighbors:
                 if neighbor not in closed:
                     if neighbor in opened:
-                        # print("neighbor", neighbor.g)
-                        # print("current", point.g + neighbor.v)
                         if neighbor.g > neighbor.v + point.g:
                             self.update_cell(neighbor, point, goals)
                     else:
@@ -242,8 +232,6 @@ class Grid ():
         visited.append(cell)
         neighbors = self.get_neighbors(cell)
         reachable_cells = 1
-        #add this to test
-        # reachable_cells += len(neighbors)
         for neighbor in neighbors:
             reachable_cells += self.flood_fill(neighbor, visited, moves-1)
         return reachable_cells
@@ -252,16 +240,15 @@ class Grid ():
         visited = []
         return self.flood_fill(cell, visited, moves)
 
-
     #enemies: list of snake
-    def is_on_enemy_way(self, enemies, snake):
-        head = self.get_cell([snake.head.x, snake.head.y])
-        for enemy in enemies:
-            enemy_head = self.get_cell([enemy.head.x, enemy.head.y])
-            if snake.len < enemy.len:
-                if head in self.get_neighbors(enemy_head):
-                    return True
-        return False
+    # def is_on_enemy_way(self, enemies, snake):
+    #     head = self.get_cell([snake.head.x, snake.head.y])
+    #     for enemy in enemies:
+    #         enemy_head = self.get_cell([enemy.head.x, enemy.head.y])
+    #         if snake.len < enemy.len:
+    #             if head in self.get_neighbors(enemy_head):
+    #                 return True
+    #     return False
 
     #cell is a Point
     def get_reachable_area_list_from_flood_fill(self, cell, visited):
