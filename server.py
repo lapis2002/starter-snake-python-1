@@ -12,7 +12,7 @@ For instructions see https://github.com/BattlesnakeOfficial/starter-snake-python
 
 SAFE = 0
 FOOD = 3
-E_HEAD = 5
+SNAKE_HEAD = 5
 DANGER = 10
 
 
@@ -90,7 +90,7 @@ def init(data):
     foods = []
     opponents = []
     grid = Grid(data["board"]["height"], data["board"]["width"])
-    my_snake = Snake(data["you"])
+    my_snake = Snake(data["you"], SNAKE_HEAD)
 
     grid.set_grid()
     for coord in my_snake.body:
@@ -102,8 +102,8 @@ def init(data):
         grid.set_cell([food.x, food.y], FOOD)
 
     for snake in data["board"]["snakes"]:
-        snake = Snake(snake)
-        if snake.id != my_snake.id:
+        if snake["id"] != my_snake.id:
+            snake = Snake(snake, DANGER)
             opponents.append(snake)
             for coord in snake.body:
                 grid.set_cell([coord.x, coord.y], coord.v)

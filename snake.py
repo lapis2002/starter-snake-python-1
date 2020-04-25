@@ -12,7 +12,7 @@ MOVES = 5
 
 '''is_good_move doesn't work properly'''
 class Snake(Point):
-    def __init__(self, snake):
+    def __init__(self, snake, value):
         self.id = snake["id"]
         self.health = snake["health"]
         self.body, self.len = self.set_body(snake)
@@ -20,9 +20,9 @@ class Snake(Point):
         self.tail = self.body[-1]
         self.next_move = ""
 
-    def set_body(self, snake):
+    def set_body(self, snake, value):
         head_coord = (snake["body"][0]["x"], snake["body"][0]["y"])
-        body = [Point([head_coord[0], head_coord[1]], SNAKE_HEAD)]
+        body = [Point([head_coord[0], head_coord[1]], value)]
 
         for coord in snake["body"][1:-1]:
             coord = Point([coord["x"], coord["y"]], DANGER)
@@ -94,14 +94,13 @@ class Snake(Point):
                         pass
                 else:
                     for neighbor in neighbors:
-                        if self.is_threaten(gameboard,  enemies, neighbor):
+                        if self.is_threaten(gameboard, enemies, neighbor):
                             pass
                         else:
                             # enemy = None
-                            # self.attack_head(gameboard, enemy)
+                            # self.attack(gameboard, enemies)
                             possible_best_moves.append(
                                 self.head.get_direction(neighbor))
-                    
                     if (possible_best_moves):
                         self.next_move = random.choice(possible_best_moves)
                     else:
@@ -308,6 +307,15 @@ class Snake(Point):
                 # print("finding happiness ...")
                 return True
             return False
+
+    def attack(self, gameboard, snakes):
+        snakes = [snake for snake in snakes if snake.len < self.len]
+        snake_heads = [snake.head for snake in snakes] 
+        path = gameboard.a_star(self.head, snake_heads)
+        if path is not None:
+            self.next_move = path[0]
+            return True
+        return False  
 
     
 
