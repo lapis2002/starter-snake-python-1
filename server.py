@@ -16,75 +16,6 @@ SNAKE_HEAD = 5
 DANGER = 10
 
 
-def dist(p1, p2):
-    dx = abs(p1[0]-p2[0])
-    dy = abs(p1[1]-p2[1])
-    return dx + dy
-
-
-def get_food(foods, gameboard, snake):
-    start = gameboard.get_cell([snake.head.x, snake.head.y])
-    path = gameboard.a_star(start, foods)
-    if (path  is not None):
-        # print(gameboard.a_star(start, foods))
-        snake.next_move = path[0]
-    else:
-        # print("a")
-        random_move(gameboard, snake)
-        
-'''
-def next_move (foods, gameboard, opponents, snake):
-    tails = []
-    for enemy in opponents:
-        tails.append(enemy.tail)
-        get_food(foods, gameboard, enemy)
-        coord = enemy.head.get_cell_from_direction(enemy.next_move)
-        gameboard.set_cell(coord, DANGER)
-        # head = enemy.head
-        # neighbors = gameboard.get_neighbors(head)
-        # for neighbor in neighbors:
-        #     gameboard.set_cell([neighbor.x, neighbor.y], DANGER)
-
-    print(snake.health)
-    if snake.health > 80 or len(foods) < 1:
-        random_move(gameboard, snake)
-    else:
-        # print("b")
-        find_food(foods, gameboard, snake)
-        
-    # find_food(foods, gameboard, snake)
-def find_food(foods, gameboard, snake):
-    get_food(foods, gameboard, snake)
-    
-
-def follow_tail(gameboard, tails, snake):
-    start = gameboard.get_cell([snake.head.x, snake.head.y])
-    snake.next_move = gameboard.a_star(start, tails)[0]
-
-def random_move(gameboard, snake):
-    tail_coord = [snake.tail.x, snake.tail.y]
-    if snake.len > 2:
-        gameboard.set_cell(tail_coord, SAFE)
-    possible_neighbors = gameboard.get_neighbors(snake.head)
-    #gotta fix this to the most reachable #cells
-    is_valid = False
-    while not(is_valid):
-        random_neighbor = random.choice(possible_neighbors)
-        result = gameboard.get_neighbors(random_neighbor)
-        is_valid = len(result) > 0
-    # print("head", [snake.head.x, snake.head.y])
-    # for i in possible_neighbors:
-    #     print([i.x, i.y])
-
-    next_move = "right"
-    if random_neighbor.x < snake.head.x:
-        next_move = "left"
-    elif random_neighbor.y < snake.head.y:
-        next_move = "up"
-    elif random_neighbor.y > snake.head.y:
-        next_move = "down"
-    snake.next_move = next_move
-'''
 def init(data):
     print("TURN", data["turn"])
     foods = []
@@ -201,19 +132,10 @@ class Battlesnake(object):
 
 
         my_snake, grid, foods, opponents = init(data)
-        # if my_snake.len < 3 or my_snake.health < 30:
-        #     get_food(foods, grid, my_snake)
-        # else:
-        #     follow_tail(grid, my_snake)
-
-        # next_move(foods, grid, opponents, my_snake)
-
         my_snake.next_movement(grid, opponents, foods)
-
         move = my_snake.next_move
         
         print(f"MOVE: {move}")
-        # print(data["you"])
         return {"move": move}
 
     @cherrypy.expose
@@ -224,10 +146,7 @@ class Battlesnake(object):
         data = cherrypy.request.json
         print("END")
         return "ok"
-
-
-        
-
+    
 if __name__ == "__main__":
     server = Battlesnake()
     cherrypy.config.update({"server.socket_host": "0.0.0.0"})
