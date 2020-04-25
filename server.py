@@ -17,6 +17,7 @@ DANGER = 10
 
 
 def init(data):
+    print(data["game"]["id"])
     print("TURN", data["turn"])
     foods = []
     opponents = []
