@@ -82,25 +82,30 @@ class Snake(Point):
                 self.next_move = best_dir
             else:
                 possible_good_moves = []
+                possible_best_moves = []
+
                 neighbors = gameboard.get_neighbors(self.head)
                 for neighbor in neighbors:
                     if (self.is_trapped(gameboard, neighbor, enemy_tails)):
                         neighbors.remove(neighbor)
+                    if not(self.is_threaten(gameboard, enemies, neighbor)):
+                        possible_best_moves.append(
+                            self.head.get_direction(neighbor))
                 possible_good_moves = [self.head.get_direction(neighbor)
                                        for neighbor in neighbors]
-                possible_best_moves = []
+                
                 if len(neighbors) == 0:
                     if (self.is_trapped(gameboard, enemy_tails)):
                         pass
                 else:
-                    for neighbor in neighbors:
-                        if self.is_threaten(gameboard, enemies, neighbor):
-                            pass
-                        else:
-                            # enemy = None
-                            # self.attack(gameboard, enemies)
-                            possible_best_moves.append(
-                                self.head.get_direction(neighbor))
+                    # for neighbor in neighbors:
+                    #     if self.is_threaten(gameboard, enemies, neighbor):
+                    #         pass
+                    #     else:
+                    #         # enemy = None
+                    #         # self.attack(gameboard, enemies)
+                    #         possible_best_moves.append(
+                    #             self.head.get_direction(neighbor))
                     if (possible_best_moves):
                         self.next_move = random.choice(possible_best_moves)
                     else:
