@@ -17,12 +17,14 @@ DANGER = 10
 
 
 def init(data):
-    print(data["game"]["id"])
+    # print(data["game"]["id"])
     print("TURN", data["turn"])
     foods = []
     opponents = []
     grid = Grid(data["board"]["height"], data["board"]["width"])
     my_snake = Snake(data["you"], SNAKE_HEAD)
+
+    game_id = data["game"]["id"]
 
     grid.set_grid()
     for coord in my_snake.body:
