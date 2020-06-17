@@ -3,6 +3,7 @@
 
 ## Rough Strategy
 The priority strategy is defensive.
+
 The snake starts by building a grid of the board based on the data. We also consider any spaces the other snakes could move next turn as dangerous.
 
 If no goals are suitable (i.e. we're not closest to any food, or getting to the next food would lead to the dead-end), then we just take the shortest path to our own tail, allowing us to loop "forever" until a goal spawns that satisfies our conditions. If we can't get to our tail, I think we just make a random move that isn't into a wall (we probably ran out of time). Another solution would be to try to path to another snake's tail, and just follow them until a goal appears or our own tail becomes visible.
