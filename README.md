@@ -1,4 +1,16 @@
-# A simple [Battlesnake](http://play.battlesnake.com) written in Python.
+# tenlaRAN Battlesnake
+## A [Battlesnake](http://play.battlesnake.com) written in Python.
+
+## Rough Strategy
+The priority strategy is defensive.
+The snake starts by building a grid of the board based on the data. We also consider any spaces the other snakes could move next turn as dangerous.
+
+If no goals are suitable (i.e. we're not closest to any food, or getting to the next food would lead to the dead-end), then we just take the shortest path to our own tail, allowing us to loop "forever" until a goal spawns that satisfies our conditions. If we can't get to our tail, I think we just make a random move that isn't into a wall (we probably ran out of time). Another solution would be to try to path to another snake's tail, and just follow them until a goal appears or our own tail becomes visible.
+### Idea
+* Implement flood filling algorithm to find the next move that would lead to a wider space
+* Use A* to find the next closest food when the health is below range
+
+### battlesnake-python
 
 This is a basic implementation of the [Battlesnake API](https://docs.battlesnake.com/snake-api). It's a great starting point for anyone wanting to program their first Battlesnake using Python. It comes ready to deploy to [Heroku](https://heroku.com), although you can use other cloud providers if you'd like.
 
@@ -11,8 +23,6 @@ This Battlesnake uses [Python 3.7](https://www.python.org/), [CherryPy](https://
 * [GitHub Account](https://github.com/) and [Git Command Line](https://www.atlassian.com/git/tutorials/install-git)
 * [Heroku Account](https://signup.heroku.com/) and [Heroku Command Line](https://devcenter.heroku.com/categories/command-line)
 * [Battlesnake Account](https://play.battlesnake.com)
-
-
 
 ## Deploying Your First Battlesnake
 
