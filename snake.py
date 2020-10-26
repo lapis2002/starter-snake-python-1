@@ -1,6 +1,6 @@
 from gameboard import *
 import random
-
+# testing
 DANGER = 10
 SAFE = 0
 FOOD = 3
